@@ -75,7 +75,7 @@ export default {
         if (res.data.success) {
           const { token, expired } = res.data
           document.cookie = `token=${token}; expired=${new Date(expired)}`
-          this.$router.push('/admin')
+          this.$router.push('/admin/products')
         }
       })
     }

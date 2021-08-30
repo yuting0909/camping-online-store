@@ -33,7 +33,13 @@ const routes = [
     component: () => import('../views/Dashboard.vue'),
     meta: {
       navShow: false
-    }
+    },
+    children: [
+      {
+        path: 'products',
+        component: () => import('../views/Products.vue')
+      }
+    ]
   }
 ]
 

@@ -45,3 +45,25 @@
 
 // Utilities
 @import '~bootstrap/scss/utilities/api';
+
+// Dashboard
+.sidebar {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 56px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// ProductModal
+#features {
+  columns: 150px;
+}
+
+// CreateProduct
+.btn-left {
+  border-top-left-radius: 0;
+}
+.btn-right {
+  border-top-right-radius: 0;
+}

@@ -1,22 +1,24 @@
 <template>
-  <div class="text-end mt-3">
-    <button class="btn btn-secondary" type="button" @click="$refs.productModal.showModal()">新增商品</button>
+  <div class="text-end mt-4">
+    <router-link to="/admin/create-product" class="btn btn-primary"
+      >建立營區</router-link
+    >
   </div>
-  <table class="table mt-3">
+  <table class="table mt-4">
     <thead>
       <tr>
         <th width="120">分類</th>
-        <th>產品名稱</th>
-        <th width="120">原價</th>
-        <th width="120">售價</th>
-        <th width="100">是否啟用</th>
+        <th width="160">營區名稱</th>
+        <th width="100">原價</th>
+        <th width="100">售價</th>
+        <th width="120">是否啟用</th>
         <th width="200">編輯</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="item in products" :key="item.id">
-        <td>{{item.catogory}}</td>
-        <td>{{item.title}}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.title }}</td>
         <td class="text-right">
           200
         </td>
@@ -29,18 +31,26 @@
         </td>
         <td>
           <div class="btn-group">
-            <button class="btn btn-outline-primary btn-sm">編輯</button>
-            <button class="btn btn-outline-danger btn-sm">刪除</button>
+            <button
+              class="btn btn-outline-primary btn-sm"
+              @click="getProduct(item.id)"
+            >
+              編輯
+            </button>
+            <button
+              class="btn btn-outline-danger btn-sm"
+              @click="delProduct(item.id)"
+            >
+              刪除
+            </button>
           </div>
         </td>
       </tr>
     </tbody>
   </table>
-  <product-modal ref="productModal"/>
 </template>
 
 <script>
-import ProductModal from '../components/ProductModal.vue'
 export default {
   data () {
     return {
@@ -48,18 +58,25 @@ export default {
       pagination: {}
     }
   },
-  components: {
-    ProductModal
-  },
   created () {
-    this.gerProducts()
+    this.getProducts()
   },
   methods: {
-    gerProducts () {
+    getProducts () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
       this.$http.get(api).then(res => {
         this.products = res.data.products
         this.pagination = res.data.pagination
+        console.log(res.data.products)
+      })
+    },
+    getProduct (id) {
+      this.$router.push(`/admin/products/${id}`)
+    },
+    delProduct (id) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${id}`
+      this.$http.delete(api).then(res => {
+        this.getProducts()
       })
     }
   }

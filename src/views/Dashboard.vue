@@ -1,16 +1,28 @@
 <template>
-  <admin-nav />
-  <div class="container">
-    <router-view />
+  <admin-nav-top />
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 col-lg-2 g-0 position-fixed">
+        <admin-nav-left />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-lg-2 g-0"></div>
+      <div class="col-md-9 col-lg-10">
+        <router-view />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import AdminNav from '../components/AdminNav.vue'
+import AdminNavTop from '../components/AdminNavTop.vue'
+import AdminNavLeft from '../components/AdminNavLeft.vue'
 
 export default {
   components: {
-    AdminNav
+    AdminNavTop,
+    AdminNavLeft
   },
   created () {
     const token = document.cookie.replace(
@@ -20,6 +32,7 @@ export default {
     this.$http.defaults.headers.common.Authorization = token
     const api = `${process.env.VUE_APP_API}api/user/check`
     this.$http.post(api, this.user).then(res => {
+      console.log(res)
       if (!res.data.success) {
         this.$router.push('/login')
       }

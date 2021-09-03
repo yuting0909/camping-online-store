@@ -1,13 +1,15 @@
 <template>
   <div class="container mt-4">
     <h1 class="mb-4 fs-2 fw-bolder">編輯營區</h1>
-    <div class="row">
+    <div class="row gx-5">
       <div class="col-12">
         <h2
           class="fs-4 fw-bolder px-3 py-1 border-start border-primary border-4 rounded mb-3"
         >
           營區資訊
         </h2>
+      </div>
+      <div class="col-12">
         <div class="mb-3">
           <label for="title" class="form-label">營區名稱</label>
           <input
@@ -110,22 +112,127 @@
       </div>
 
       <div class="col-12">
-        <div class="d-flex mb-3">
-          <h2
-            class="fs-4 fw-bolder px-3 py-1 border-start border-primary border-4 rounded"
-          >
-            營地種類
-          </h2>
-          <div class="ms-auto">
-            <button
-              class="btn btn-primary"
-              type="button"
-              @click="openModal(true)"
-            >
-              新增種類
-            </button>
+        <h2
+          class="fs-4 fw-bolder px-3 py-1 border-start border-primary border-4 rounded mb-3"
+        >
+          營區照片
+        </h2>
+      </div>
+      <div class="col-12">
+        <label class="form-label">營區封面照片</label>
+        <div class="d-flex">
+          <div class="flex-fill mb-3 me-3">
+            <input
+              type="text"
+              class="form-control"
+              id="image"
+              v-model="temProduct.imageUrl"
+              placeholder="請輸入圖片連結"
+            />
+          </div>
+          <div class="d-flex align-items-center mb-3 me-3">
+            <span>或上傳檔案</span>
+          </div>
+          <div class="flex-fill mb-3">
+            <input
+              type="file"
+              id="imageFile"
+              class="form-control"
+              ref="fileInput"
+              @change="uploadFile"
+            />
           </div>
         </div>
+
+        <div class="mb-3">
+          <div class="mb-3">
+            <button
+              class="btn btn-outline-primary btn-sm d-block"
+              @click="temProduct.images.push('')"
+            >
+              新增更多照片
+            </button>
+          </div>
+
+          <div
+            class="d-flex"
+            v-for="(image, key) in temProduct.images"
+            :key="key"
+          >
+            <div class="flex-fill mb-3 me-3">
+              <input
+                type="url"
+                class="form-control form-control"
+                v-model="temProduct.images[key]"
+                placeholder="請輸入連結"
+              />
+            </div>
+            <div class="d-flex align-items-center mb-3 me-3">
+              <span>或上傳檔案</span>
+            </div>
+            <div class="flex-fill mb-3 me-2">
+              <input
+                type="file"
+                class="form-control"
+                :ref="setItemRef"
+                @change="uploadFileMore(key)"
+              />
+            </div>
+            <div class="mb-3">
+              <button
+                class="btn btn-outline-danger"
+                type="button"
+                @click="temProduct.images.splice(key, 1)"
+              >
+                移除
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3" v-if="temProduct.imageUrl || temProduct.images">
+          <div class="row image-wall">
+            <div class="col-sm-6 col-lg-3 mb-3" v-if="temProduct.imageUrl">
+              <img
+                class="product-image"
+                :src="temProduct.imageUrl"
+                :alt="temProduct.title"
+              />
+            </div>
+            <div
+              class="col-sm-6 col-lg-3 mb-3"
+              v-for="(image, key) in temProduct.images"
+              :key="key"
+            >
+              <img
+                class="product-image"
+                :src="temProduct.images[key]"
+                :alt="temProduct.title"
+              />
+            </div>
+          </div>
+        </div>
+        <br />
+      </div>
+
+      <div class="col-12 d-flex mb-3">
+        <h2
+          class="fs-4 fw-bolder px-3 py-1 border-start border-primary border-4 rounded"
+        >
+          營地種類
+        </h2>
+        <div class="ms-auto">
+          <button
+            class="btn btn-primary"
+            type="button"
+            @click="openModal(true)"
+          >
+            新增種類
+          </button>
+        </div>
+      </div>
+
+      <div class="col-12">
         <div class="mb-3">
           <div class="row row-cols-1 row-cols-lg-3 g-4">
             <div
@@ -134,6 +241,12 @@
               :key="type.title"
             >
               <div class="card bg-light h-100">
+                <img
+                  v-if="type.images[0]"
+                  class="type-image"
+                  :src="type.images[0]"
+                  :alt="type"
+                />
                 <div class="card-body">
                   <div
                     class="card-title d-flex align-items-center justify-content-between"
@@ -153,7 +266,7 @@
                     >
                   </div>
                 </div>
-                <div class="card-footer bg-light p-0">
+                <div class="card-footer bg-light border-0 p-0">
                   <div class="btn-group w-100">
                     <button
                       type="button"
@@ -200,40 +313,16 @@
 </template>
 
 <script>
-import TypeModal from '../components/TypeModal.vue'
+import productMixin from '../mixins/productMixin'
+
 export default {
   data () {
     return {
-      region: {
-        北部: ['台北', '新北', '桃園', '新竹'],
-        中部: ['苗栗', '台中', '南投', '雲林'],
-        南部: ['嘉義', '台南', '高雄', '屏東'],
-        東部: ['宜蘭', '花蓮', '台東'],
-        離島: ['金門', '澎湖']
-      },
-      cities: ['台北', '新北', '桃園', '新竹'],
-      features: [
-        '免裝備',
-        '裝備租借',
-        '雨棚',
-        '遊戲設施',
-        '玩水',
-        '高海拔',
-        '森林',
-        '草原',
-        '靠海',
-        '夜景',
-        '雲海'
-      ],
       temProduct: {},
-      temType: {},
-      isNew: false,
       id: ''
     }
   },
-  components: {
-    TypeModal
-  },
+  mixins: [productMixin],
   created () {
     this.id = this.$route.params.productId
     this.getProduct()
@@ -245,47 +334,12 @@ export default {
         this.temProduct = res.data.product
       })
     },
-    updateCities () {
-      this.cities = this.region[this.temProduct.category]
-      this.temProduct.city = this.cities[0]
-    },
-    openModal (isNew, type) {
-      console.log(isNew, type)
-      if (isNew) {
-        this.temType = {}
-      } else {
-        this.temType = this.temProduct.type_group.find(
-          item => item.id === type.id
-        )
-      }
-      this.isNew = isNew
-      const typeComponent = this.$refs.typeModal
-      typeComponent.showModal()
-    },
-    updateType (item) {
-      console.log(item)
-      if (this.isNew) {
-        this.temType = { ...item, id: new Date().getTime() }
-        this.temProduct.type_group.push(this.temType)
-      } else {
-        this.temType = { ...item }
-      }
-      console.log(this.temProduct)
-      this.$refs.typeModal.hideModal()
-    },
-    deleteType (item) {
-      const i = this.temProduct.type_group.indexOf(item)
-      this.temProduct.type_group.splice(i, 1)
-    },
     updateProduct () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.id}`
       this.$http.put(api, { data: this.temProduct }).then(res => {
         console.log(res)
         this.$router.push('/admin/products')
       })
-    },
-    cancel () {
-      this.$router.push('/admin/products')
     }
   }
 }

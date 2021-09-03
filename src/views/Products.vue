@@ -20,10 +20,10 @@
         <td>{{ item.category }}</td>
         <td>{{ item.title }}</td>
         <td class="text-right">
-          200
+          {{ item.origin_price }}
         </td>
         <td class="text-right">
-          100
+          {{ item.price }}
         </td>
         <td>
           <span class="text-success" v-if="item.is_enabled">啟用</span>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="modal fade mt-5"
+    class="modal fade"
     id="exampleModal"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
@@ -102,6 +102,65 @@
               </label>
             </div>
           </div>
+
+          <div class="mb-3">
+            <div class="mb-3">
+              <button
+                class="btn btn-outline-primary btn-sm d-block"
+                @click="temType.images.push('')"
+              >
+                新增營地照片
+              </button>
+            </div>
+            <div
+              class="d-flex"
+              v-for="(image, key) in temType.images"
+              :key="key"
+            >
+              <div class="flex-fill mb-3 me-3">
+                <input
+                  type="url"
+                  class="form-control form-control"
+                  v-model="temType.images[key]"
+                  placeholder="請輸入連結"
+                />
+              </div>
+              <div class="d-flex align-items-center mb-3 me-3">
+                <span>或上傳檔案</span>
+              </div>
+              <div class="flex-fill mb-3 me-2">
+                <input
+                  type="file"
+                  class="form-control"
+                  :ref="setItemRef"
+                  @change="uploadFile(key)"
+                />
+              </div>
+              <div class="mb-3">
+                <button
+                  class="btn btn-outline-danger"
+                  type="button"
+                  @click="temType.images.splice(key, 1)"
+                >
+                  移除
+                </button>
+              </div>
+            </div>
+
+            <div v-if="temType.images" class="row image-wall">
+              <div
+                class="col-6 col-lg-4 mb-3"
+                v-for="(image, key) in temType.images"
+                :key="key"
+              >
+                <img
+                  class="product-image"
+                  :src="temType.images[key]"
+                  :alt="temType.title"
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button
@@ -138,12 +197,16 @@ export default {
   watch: {
     type () {
       this.temType = this.type
+      if (!this.temType.images) {
+        this.temType.images = []
+      }
     }
   },
   data () {
     return {
       modal: {},
-      temType: {}
+      temType: {},
+      itemRefs: []
     }
   },
   methods: {
@@ -152,7 +215,28 @@ export default {
     },
     hideModal () {
       this.modal.hide()
+    },
+    setItemRef (el) {
+      if (el) {
+        this.itemRefs.push(el)
+      }
+    },
+    uploadFile (key) {
+      const file = this.itemRefs[key].files[0]
+      console.log(file)
+      const formData = new FormData()
+      formData.append('file-to-upload', file)
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
+      this.$http.post(api, formData).then(response => {
+        console.log(response.data)
+        if (response.data.success) {
+          this.temType.images[key] = response.data.imageUrl
+        }
+      })
     }
+  },
+  beforeUpdate () {
+    this.itemRefs = []
   },
   mounted () {
     this.modal = new Modal(this.$refs.modal)

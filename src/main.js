@@ -8,9 +8,12 @@ import router from './router'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
+import { currency } from './methods/filters'
+
 import '@/style/all.scss'
 
 const app = createApp(App)
+app.config.globalProperties.$filters = { currency }
 app.use(VueAxios, axios)
 app.use(router)
 app.component('Loading', Loading)

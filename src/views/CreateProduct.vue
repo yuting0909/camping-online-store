@@ -337,8 +337,18 @@ export default {
       this.$http.post(api, { data: this.temProduct }).then(res => {
         console.log(res)
         if (res.data.success) {
+          this.emitter.emit('push-message', {
+            style: 'success',
+            title: '更新成功'
+          })
           return this.$router.push('/admin/products')
         }
+        this.emitter.emit('push-message', {
+          style: 'danger',
+          title: '更新失敗',
+          content: res.data.message.join('、')
+        })
+        document.documentElement.scrollTop = 0
       })
     }
   }

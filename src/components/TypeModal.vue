@@ -59,7 +59,7 @@
             </div>
             <div class="row g-0 mb-3">
               <label for="type-1-price" class="col-sm-2 col-form-label fs-6"
-                >收費</label
+                >收費價格</label
               >
               <div class="col-sm-10">
                 <input

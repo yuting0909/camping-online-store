@@ -42,6 +42,7 @@ export default {
       deep: true
     }
   },
+  inject: ['emitter'],
   components: {
     TypeModal
   },
@@ -94,8 +95,14 @@ export default {
       typeComponent.showModal()
     },
     updateType (item) {
+      this.$refs.typeModal.hideModal()
       if (!item.price || !item.title || !item.unit) {
-        alert('營位名稱、單位、價錢皆不得為空')
+        this.emitter.emit('push-message', {
+          style: 'danger',
+          title: '更新失敗',
+          content: '營地種類、收費單位、收費價格為必填欄位'
+        })
+        document.documentElement.scrollTop = 0
         return
       }
       if (this.isNew) {
@@ -104,7 +111,6 @@ export default {
       } else {
         this.temType = { ...item }
       }
-      this.$refs.typeModal.hideModal()
     },
     deleteType (item) {
       const i = this.temProduct.type_group.indexOf(item)

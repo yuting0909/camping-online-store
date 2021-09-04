@@ -1,4 +1,18 @@
 <template>
+<Loading :active="isLoading">
+    <div class="loadingio-spinner-spin-xmpavumjb">
+      <div class="ldio-ylwm2fadiqf">
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+      </div>
+    </div>
+  </Loading>
   <div class="container mt-4">
     <h1 class="mb-4 fs-2 fw-bolder">編輯營區</h1>
     <div class="row gx-5">
@@ -319,7 +333,8 @@ export default {
   data () {
     return {
       temProduct: {},
-      id: ''
+      id: '',
+      isLoading: false
     }
   },
   mixins: [productMixin],
@@ -330,7 +345,9 @@ export default {
   methods: {
     getProduct () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.id}`
+      this.isLoading = true
       this.$http.get(api).then(res => {
+        this.isLoading = false
         this.temProduct = res.data.product
       })
     },
@@ -339,8 +356,18 @@ export default {
       this.$http.put(api, { data: this.temProduct }).then(res => {
         console.log(res)
         if (res.data.success) {
+          this.emitter.emit('push-message', {
+            style: 'success',
+            title: '更新成功'
+          })
           return this.$router.push('/admin/products')
         }
+        this.emitter.emit('push-message', {
+          style: 'danger',
+          title: '更新失敗',
+          content: res.data.message.join('、')
+        })
+        document.documentElement.scrollTop = 0
       })
     }
   }

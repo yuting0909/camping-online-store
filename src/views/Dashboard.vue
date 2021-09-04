@@ -1,6 +1,7 @@
 <template>
   <admin-nav-top />
-  <div class="container-fluid">
+  <div class="container-fluid position-relative">
+    <toast-messages />
     <div class="row">
       <div class="col-md-3 col-lg-2 g-0 position-fixed">
         <admin-nav-left />
@@ -18,11 +19,19 @@
 <script>
 import AdminNavTop from '../components/AdminNavTop.vue'
 import AdminNavLeft from '../components/AdminNavLeft.vue'
+import ToastMessages from '../components/ToastMessages.vue'
+import emitter from '../methods/emitter'
 
 export default {
   components: {
     AdminNavTop,
-    AdminNavLeft
+    AdminNavLeft,
+    ToastMessages
+  },
+  provide () {
+    return {
+      emitter
+    }
   },
   created () {
     const token = document.cookie.replace(

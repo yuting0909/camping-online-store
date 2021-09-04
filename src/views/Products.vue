@@ -62,9 +62,12 @@
       </tr>
     </tbody>
   </table>
+  <Pagination :pages="pagination" @update-page="getProducts"/>
 </template>
 
 <script>
+import Pagination from '../components/Pagenation.vue'
+
 export default {
   data () {
     return {
@@ -73,19 +76,20 @@ export default {
       isLoading: false
     }
   },
+  components: { Pagination },
   created () {
     this.getProducts()
   },
   methods: {
-    getProducts () {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
+    getProducts (page = 1) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`
       this.isLoading = true
       this.$http.get(api).then(res => {
         this.isLoading = false
         if (res.data.success) {
           this.products = res.data.products
           this.pagination = res.data.pagination
-          console.log(res.data.products)
+          console.log(res.data)
         }
       })
     },

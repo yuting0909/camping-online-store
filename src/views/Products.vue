@@ -1,4 +1,18 @@
 <template>
+  <Loading :active="isLoading">
+    <div class="loadingio-spinner-spin-xmpavumjb">
+      <div class="ldio-ylwm2fadiqf">
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+        <div><div></div></div>
+      </div>
+    </div>
+  </Loading>
   <div class="text-end mt-4">
     <router-link to="/admin/create-product" class="btn btn-primary"
       >建立營區</router-link
@@ -55,7 +69,8 @@ export default {
   data () {
     return {
       products: [],
-      pagination: {}
+      pagination: {},
+      isLoading: false
     }
   },
   created () {
@@ -64,10 +79,14 @@ export default {
   methods: {
     getProducts () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
+      this.isLoading = true
       this.$http.get(api).then(res => {
-        this.products = res.data.products
-        this.pagination = res.data.pagination
-        console.log(res.data.products)
+        this.isLoading = false
+        if (res.data.success) {
+          this.products = res.data.products
+          this.pagination = res.data.pagination
+          console.log(res.data.products)
+        }
       })
     },
     getProduct (id) {

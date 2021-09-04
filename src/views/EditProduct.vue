@@ -338,7 +338,9 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.id}`
       this.$http.put(api, { data: this.temProduct }).then(res => {
         console.log(res)
-        this.$router.push('/admin/products')
+        if (res.data.success) {
+          return this.$router.push('/admin/products')
+        }
       })
     }
   }

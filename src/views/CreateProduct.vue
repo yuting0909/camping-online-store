@@ -322,8 +322,8 @@ export default {
         category: '北部',
         city: '台北',
         unit: '個',
-        origin_price: 1000,
-        price: 900,
+        origin_price: 0,
+        price: 0,
         features: [],
         images: [],
         type_group: []
@@ -336,7 +336,9 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
       this.$http.post(api, { data: this.temProduct }).then(res => {
         console.log(res)
-        this.$router.push('/admin/products')
+        if (res.data.success) {
+          return this.$router.push('/admin/products')
+        }
       })
     }
   }

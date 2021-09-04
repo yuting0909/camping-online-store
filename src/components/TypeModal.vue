@@ -85,21 +85,20 @@
                 ></textarea>
               </div>
             </div>
-          </div>
-
-          <div class="mb-3">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                :true-value="1"
-                :false-value="0"
-                id="type-1-is_enabled"
-                v-model="temType.is_enabled"
-              />
-              <label class="form-check-label" for="type-1-is_enabled">
-                是否啟用
-              </label>
+            <div class="mb-3">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  :true-value="1"
+                  :false-value="0"
+                  id="type-1-is_enabled"
+                  v-model="temType.is_enabled"
+                />
+                <label class="form-check-label" for="type-1-is_enabled">
+                  是否啟用
+                </label>
+              </div>
             </div>
           </div>
 

@@ -35,7 +35,8 @@ export default {
         const typeGroup = this.temProduct.type_group
         if (typeGroup && typeGroup.length) {
           const typePriceArr = typeGroup.map(type => type.price)
-          this.temProduct.price = Math.min(...typePriceArr)
+          this.temProduct.origin_price = Math.min(...typePriceArr)
+          this.temProduct.price = Math.max(...typePriceArr)
         }
       },
       deep: true
@@ -93,6 +94,10 @@ export default {
       typeComponent.showModal()
     },
     updateType (item) {
+      if (!item.price || !item.title || !item.unit) {
+        alert('營位名稱、單位、價錢皆不得為空')
+        return
+      }
       if (this.isNew) {
         this.temType = { ...item, id: new Date().getTime() }
         this.temProduct.type_group.push(this.temType)

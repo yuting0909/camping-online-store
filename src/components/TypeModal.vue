@@ -22,11 +22,11 @@
         </div>
         <div class="modal-body">
           <div class="mb-3">
-            <div class="row g-0 mb-3">
+            <div class="row mb-3">
               <label for="type-1-name" class="col-sm-2 col-form-label fs-6"
                 >營地種類</label
               >
-              <div class="col-sm-10">
+              <div class="col-sm-4">
                 <input
                   type="text"
                   class="form-control"
@@ -35,10 +35,8 @@
                   v-model="temType.title"
                 />
               </div>
-            </div>
-            <div class="row g-0 mb-3">
               <label class="col-sm-2 col-form-label fs-6">收費單位</label>
-              <div class="col-sm-10 d-flex align-items-center">
+              <div class="col-sm-4 d-flex align-items-center">
                 <input
                   class="me-1"
                   type="radio"
@@ -57,11 +55,23 @@
                 <label for="unit-2">帳</label>
               </div>
             </div>
-            <div class="row g-0 mb-3">
+            <div class="row mb-3">
               <label for="type-1-price" class="col-sm-2 col-form-label fs-6"
-                >收費價格</label
+                >原價</label
               >
-              <div class="col-sm-10">
+              <div class="col-sm-4">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="type-1-price"
+                  placeholder="請輸入收費金額"
+                  v-model="temType.origin_price"
+                />
+              </div>
+              <label for="type-1-price" class="col-sm-2 col-form-label fs-6"
+                >特價</label
+              >
+              <div class="col-sm-4">
                 <input
                   type="number"
                   class="form-control"
@@ -71,7 +81,7 @@
                 />
               </div>
             </div>
-            <div class="row g-0 mb-3">
+            <div class="row mb-3">
               <label for="type-1-content" class="col-sm-2 col-form-label fs-6"
                 >備註</label
               >

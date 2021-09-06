@@ -25,6 +25,8 @@ export default {
         '雲海'
       ],
       temType: {},
+      types: [],
+      temTypes: [],
       isNew: false,
       itemRefs: []
     }
@@ -32,7 +34,7 @@ export default {
   watch: {
     temProduct: {
       handler () {
-        const typeGroup = this.temProduct.type_group
+        const typeGroup = this.types
         if (typeGroup && typeGroup.length) {
           const typePriceArr = typeGroup.map(type => type.price)
           this.temProduct.origin_price = Math.min(...typePriceArr)
@@ -51,7 +53,7 @@ export default {
   },
   methods: {
     updateCities () {
-      this.cities = this.region[this.temProduct.category]
+      this.cities = this.region[this.temProduct.region]
       this.temProduct.city = this.cities[0]
     },
     setItemRef (el) {
@@ -86,35 +88,35 @@ export default {
       if (isNew) {
         this.temType = {}
       } else {
-        this.temType = this.temProduct.type_group.find(
-          item => item.id === type.id
-        )
+        this.temType = type
       }
       this.isNew = isNew
-      const typeComponent = this.$refs.typeModal
-      typeComponent.showModal()
+      this.$refs.typeModal.showModal()
     },
-    updateType (item) {
-      this.$refs.typeModal.hideModal()
-      if (!item.price || !item.title || !item.unit) {
-        this.emitter.emit('push-message', {
-          style: 'danger',
-          title: '更新失敗',
-          content: '營地種類、收費單位、收費價格為必填欄位'
-        })
-        document.documentElement.scrollTop = 0
-        return
-      }
+    getTypes () {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
+      this.isLoading = true
+      this.$http.get(api).then(res => {
+        this.isLoading = false
+        if (res.data.success) {
+          this.types = res.data.products.filter(
+            product => product.belong_to === this.temProduct.title
+          )
+        }
+      })
+    },
+    updateTemType (item) {
       if (this.isNew) {
-        this.temType = { ...item, id: new Date().getTime() }
-        this.temProduct.type_group.push(this.temType)
+        this.temTypes.push(item)
       } else {
-        this.temType = { ...item }
+        const i = this.temTypes.indexOf(item)
+        this.temTypes[i] = this.temType
       }
+      this.$refs.typeModal.hideModal()
     },
-    deleteType (item) {
-      const i = this.temProduct.type_group.indexOf(item)
-      this.temProduct.type_group.splice(i, 1)
+    deleteTemType (item) {
+      const i = this.temTypes.indexOf(item)
+      this.temTypes.splice(i, 1)
     },
     cancel () {
       this.$router.push('/admin/products')

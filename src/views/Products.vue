@@ -87,7 +87,7 @@ export default {
       this.$http.get(api).then(res => {
         this.isLoading = false
         if (res.data.success) {
-          this.products = res.data.products
+          this.products = res.data.products.filter(product => product.category === '露營區')
           this.pagination = res.data.pagination
           console.log(res.data)
         }

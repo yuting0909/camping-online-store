@@ -23,11 +23,11 @@
 
         <div class="row gx-2">
           <div class="mb-3 col-md-3">
-            <label for="category" class="form-label">地區</label>
+            <label for="region" class="form-label">地區</label>
             <select
-              id="category"
+              id="region"
               class="form-select"
-              v-model="temProduct.category"
+              v-model="temProduct.region"
               @change="updateCities"
             >
               <option>北部</option>
@@ -235,14 +235,10 @@
       <div class="col-12">
         <div class="mb-3">
           <div class="row row-cols-1 row-cols-lg-3 g-4">
-            <div
-              class="col"
-              v-for="type in temProduct.type_group"
-              :key="type.title"
-            >
+            <div class="col" v-for="type in temTypes" :key="type.title">
               <div class="card bg-light h-100">
                 <img
-                  v-if="type.images[0]"
+                  v-if="type.images && type.images[0]"
                   class="type-image"
                   :src="type.images[0]"
                   :alt="type"
@@ -278,7 +274,7 @@
                     <button
                       type="button"
                       class="btn btn-outline-danger w-50 btn-right"
-                      @click="deleteType(type)"
+                      @click="deleteTemType(type)"
                     >
                       刪除
                     </button>
@@ -309,7 +305,7 @@
       </div>
     </div>
   </div>
-  <type-modal ref="typeModal" :type="temType" @update-type="updateType" />
+  <type-modal ref="typeModal" :type="temType" @update-type="updateTemType" />
 </template>
 
 <script>
@@ -319,14 +315,14 @@ export default {
   data () {
     return {
       temProduct: {
-        category: '北部',
+        category: '露營區',
+        region: '北部',
         city: '台北',
         unit: '個',
         origin_price: 0,
         price: 0,
         features: [],
-        images: [],
-        type_group: []
+        images: []
       }
     }
   },
@@ -339,17 +335,49 @@ export default {
         if (res.data.success) {
           this.emitter.emit('push-message', {
             style: 'success',
-            title: '更新成功'
+            title: '營區更新成功'
           })
-          return this.$router.push('/admin/products')
+        } else {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '營區更新失敗',
+            content: res.data.message.join('、')
+          })
         }
-        this.emitter.emit('push-message', {
-          style: 'danger',
-          title: '更新失敗',
-          content: res.data.message.join('、')
-        })
-        document.documentElement.scrollTop = 0
+      }).then(() => {
+        this.createTypes()
+      }).then(() => {
+        this.$router.push('/admin/products')
+        console.log('回到產品列表')
       })
+    },
+    createTypes () {
+      this.temTypes.forEach((val, i, arr) => {
+        arr[i] = {
+          belong_to: this.temProduct.title,
+          ...val,
+          category: '營地種類'
+        }
+      })
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
+      for (let i = 0; i < this.temTypes.length; i++) {
+        this.$http.post(api, { data: this.temTypes[i] }).then(res => {
+          if (res.data.success) {
+            console.log(res)
+            console.log(`${this.temTypes[i].title}更新成功`)
+            this.emitter.emit('push-message', {
+              style: 'success',
+              title: '營地種類更新成功'
+            })
+          } else {
+            this.emitter.emit('push-message', {
+              style: 'danger',
+              title: '營地種類更新失敗',
+              content: res.data.message.join('、')
+            })
+          }
+        })
+      }
     }
   }
 }

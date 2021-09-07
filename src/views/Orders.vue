@@ -77,11 +77,14 @@
     ref="deleteModal"
     @del-item="deleteOrder"
   ></delete-modal>
+  <pagination :pages="pagination" @update-page="getOrders"></pagination>
 </template>
 
 <script>
 import OrderModal from '../components/OrderModal.vue'
 import DeleteModal from '../components/DeleteModal.vue'
+import Pagination from '../components/Pagenation.vue'
+
 export default {
   data () {
     return {
@@ -92,7 +95,7 @@ export default {
       currentPage: 1
     }
   },
-  components: { OrderModal, DeleteModal },
+  components: { OrderModal, DeleteModal, Pagination },
   created () {
     this.getOrders()
   },

@@ -21,6 +21,7 @@ import AdminNavTop from '../components/AdminNavTop.vue'
 import AdminNavLeft from '../components/AdminNavLeft.vue'
 import ToastMessages from '../components/ToastMessages.vue'
 import emitter from '../methods/emitter'
+import pushMessageState from '../methods/pushMessageState'
 
 export default {
   components: {
@@ -30,7 +31,8 @@ export default {
   },
   provide () {
     return {
-      emitter
+      emitter,
+      pushMessageState
     }
   },
   created () {

@@ -44,7 +44,7 @@ export default {
       deep: true
     }
   },
-  inject: ['emitter'],
+  inject: ['emitter', 'pushMessageState'],
   components: {
     TypeModal
   },

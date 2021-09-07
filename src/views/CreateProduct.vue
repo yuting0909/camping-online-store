@@ -330,26 +330,19 @@ export default {
   methods: {
     createProduct () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
-      this.$http.post(api, { data: this.temProduct }).then(res => {
-        console.log(res)
-        if (res.data.success) {
-          this.emitter.emit('push-message', {
-            style: 'success',
-            title: '營區更新成功'
-          })
-        } else {
-          this.emitter.emit('push-message', {
-            style: 'danger',
-            title: '營區更新失敗',
-            content: res.data.message.join('、')
-          })
-        }
-      }).then(() => {
-        this.createTypes()
-      }).then(() => {
-        this.$router.push('/admin/products')
-        console.log('回到產品列表')
-      })
+      this.$http
+        .post(api, { data: this.temProduct })
+        .then(res => {
+          console.log(res)
+          this.pushMessageState(res, '營區新增')
+        })
+        .then(() => {
+          this.createTypes()
+        })
+        .then(() => {
+          this.$router.push('/admin/products')
+          console.log('回到產品列表')
+        })
     },
     createTypes () {
       this.temTypes.forEach((val, i, arr) => {
@@ -362,20 +355,7 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
       for (let i = 0; i < this.temTypes.length; i++) {
         this.$http.post(api, { data: this.temTypes[i] }).then(res => {
-          if (res.data.success) {
-            console.log(res)
-            console.log(`${this.temTypes[i].title}更新成功`)
-            this.emitter.emit('push-message', {
-              style: 'success',
-              title: '營地種類更新成功'
-            })
-          } else {
-            this.emitter.emit('push-message', {
-              style: 'danger',
-              title: '營地種類更新失敗',
-              content: res.data.message.join('、')
-            })
-          }
+          this.pushMessageState(res, '營地種類新增')
         })
       }
     }

@@ -363,18 +363,7 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.id}`
       this.$http.put(api, { data: this.temProduct }).then(res => {
         console.log(res)
-        if (res.data.success) {
-          this.emitter.emit('push-message', {
-            style: 'success',
-            title: '更新成功'
-          })
-        } else {
-          this.emitter.emit('push-message', {
-            style: 'danger',
-            title: '更新失敗',
-            content: res.data.message.join('、')
-          })
-        }
+        this.pushMessageState(res, '營區更新')
         console.log(1)
       }).then(() => {
         this.deleteAllTypes()
@@ -406,20 +395,7 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
       for (let i = 0; i < this.temTypes.length; i++) {
         this.$http.post(api, { data: this.temTypes[i] }).then(res => {
-          if (res.data.success) {
-            console.log(res)
-            console.log(`${this.temTypes[i].title}更新成功`)
-            this.emitter.emit('push-message', {
-              style: 'success',
-              title: '營地種類更新成功'
-            })
-          } else {
-            this.emitter.emit('push-message', {
-              style: 'danger',
-              title: '營地種類更新失敗',
-              content: res.data.message.join('、')
-            })
-          }
+          this.pushMessageState(res, '營地種類更新')
         })
       }
     }

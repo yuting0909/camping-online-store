@@ -53,7 +53,7 @@
             </button>
             <button
               class="btn btn-outline-danger btn-sm"
-              @click="delProduct(item.id)"
+              @click="openDelModal(item)"
             >
               刪除
             </button>
@@ -62,10 +62,16 @@
       </tr>
     </tbody>
   </table>
-  <Pagination :pages="pagination" @update-page="getProducts" />
+  <delete-modal
+    :item="temProduct"
+    ref="deleteModal"
+    @del-item="deleteProduct"
+  ></delete-modal>
+  <pagination :pages="pagination" @update-page="getProducts" />
 </template>
 
 <script>
+import DeleteModal from '../components/DeleteModal.vue'
 import Pagination from '../components/Pagenation.vue'
 
 export default {
@@ -73,10 +79,11 @@ export default {
     return {
       products: [],
       pagination: {},
+      temProduct: {},
       isLoading: false
     }
   },
-  components: { Pagination },
+  components: { DeleteModal, Pagination },
   created () {
     this.getProducts()
   },
@@ -87,7 +94,9 @@ export default {
       this.$http.get(api).then(res => {
         this.isLoading = false
         if (res.data.success) {
-          this.products = res.data.products.filter(product => product.category === '露營區')
+          this.products = res.data.products.filter(
+            product => product.category === '露營區'
+          )
           this.pagination = res.data.pagination
           console.log(res.data)
         }
@@ -96,10 +105,19 @@ export default {
     getProduct (id) {
       this.$router.push(`/admin/products/${id}`)
     },
-    delProduct (id) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${id}`
+    openDelModal (item) {
+      this.temProduct = { ...item }
+      this.$refs.deleteModal.showModal()
+    },
+    deleteProduct () {
+      this.$refs.deleteModal.hideModal()
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.temProduct.id}`
+      this.isLoading = true
       this.$http.delete(api).then(res => {
-        this.getProducts()
+        this.isLoading = false
+        if (res.data.success) {
+          this.getProducts()
+        }
       })
     }
   }

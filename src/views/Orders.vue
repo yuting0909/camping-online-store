@@ -122,12 +122,12 @@ export default {
       this.$refs.deleteModal.showModal()
     },
     deleteOrder () {
+      this.$refs.deleteModal.hideModal()
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${this.temOrder.id}`
       this.isLoading = true
       this.$http.delete(api).then(res => {
         this.isLoading = false
         if (res.data.success) {
-          this.$refs.deleteModal.hideModal()
           this.getOrders(this.currentPage)
         }
       })

@@ -1,7 +1,8 @@
 <template>
-  <div class="container py-5" id="login">
+  <div class="container-fluid position-relative py-5" id="login">
+    <toast-messages />
     <div class="row mt-5">
-      <div class="col-md-6 col-xxl-5 m-auto">
+      <div class="col-10 col-md-6 col-xl-4 m-auto">
         <div class="card card-body bg-light border-0 rounded-3 p-5">
           <img
             class="w-25 m-auto mb-3"
@@ -59,6 +60,10 @@
 </template>
 
 <script>
+import pushMessageState from '../methods/pushMessageState'
+import ToastMessages from '../components/ToastMessages.vue'
+import emitter from '../methods/emitter'
+
 export default {
   data () {
     return {
@@ -68,6 +73,10 @@ export default {
       }
     }
   },
+  components: { ToastMessages },
+  provide () {
+    return { emitter }
+  },
   methods: {
     login () {
       const api = `${process.env.VUE_APP_API}admin/signin`
@@ -76,6 +85,8 @@ export default {
           const { token, expired } = res.data
           document.cookie = `token=${token}; expired=${new Date(expired)}`
           this.$router.push('/admin/products')
+        } else {
+          pushMessageState(res, '登入')
         }
       })
     }

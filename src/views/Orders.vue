@@ -109,7 +109,6 @@ export default {
         if (res.data.success) {
           this.orders = res.data.orders
           this.pagination = res.data.pagination
-          console.log(res)
         }
       })
     },

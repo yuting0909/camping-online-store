@@ -39,10 +39,12 @@
 
 <script>
 export default {
+  inject: ['pushMessageState'],
   methods: {
     logout () {
       const api = `${process.env.VUE_APP_API}logout`
       this.$http.post(api).then(res => {
+        this.pushMessageState(res, '登出')
         if (res.data.success) {
           this.$router.push('/login')
         }

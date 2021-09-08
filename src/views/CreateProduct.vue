@@ -333,7 +333,6 @@ export default {
       this.$http
         .post(api, { data: this.temProduct })
         .then(res => {
-          console.log(res)
           this.pushMessageState(res, '營區新增')
         })
         .then(() => {
@@ -341,7 +340,6 @@ export default {
         })
         .then(() => {
           this.$router.push('/admin/products')
-          console.log('回到產品列表')
         })
     },
     createTypes () {

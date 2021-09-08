@@ -74,7 +74,6 @@ export default {
     },
     uploadFileMore (key) {
       const file = this.itemRefs[key].files[0]
-      console.log(file)
       const formData = new FormData()
       formData.append('file-to-upload', file)
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`

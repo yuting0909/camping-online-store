@@ -98,7 +98,6 @@ export default {
             product => product.category === '露營區'
           )
           this.pagination = res.data.pagination
-          console.log(res.data)
         }
       })
     },

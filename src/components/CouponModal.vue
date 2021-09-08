@@ -123,12 +123,9 @@ export default {
     coupon () {
       this.temCoupon = this.coupon
       // 將時間格式改為 YYYY-MM-DD
-      console.log(this.temCoupon.due_date)
-      const dateAndTime = new Date(this.temCoupon.due_date * 1000)
+      this.due_date = new Date(this.temCoupon.due_date * 1000)
         .toISOString()
         .substr(0, 10)
-      console.log(dateAndTime)
-      this.due_date = dateAndTime
     },
     due_date () {
       this.temCoupon.due_date = Math.floor(new Date(this.due_date) / 1000)

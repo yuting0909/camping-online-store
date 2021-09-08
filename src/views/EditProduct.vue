@@ -361,27 +361,26 @@ export default {
     },
     updateProduct () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.id}`
-      this.$http.put(api, { data: this.temProduct }).then(res => {
-        console.log(res)
-        this.pushMessageState(res, '營區更新')
-        console.log(1)
-      }).then(() => {
-        this.deleteAllTypes()
-      }).then(() => {
-        this.createTypes()
-      }).then(() => {
-        this.$router.push('/admin/products')
-        console.log('回到產品列表')
-      })
+      this.$http
+        .put(api, { data: this.temProduct })
+        .then(res => {
+          this.pushMessageState(res, '營區更新')
+        })
+        .then(() => {
+          this.deleteAllTypes()
+        })
+        .then(() => {
+          this.createTypes()
+        })
+        .then(() => {
+          this.$router.push('/admin/products')
+        })
     },
     deleteAllTypes () {
       for (let i = 0; i < this.types.length; i++) {
         const id = this.types[i].id
-        const title = this.types[i].title
         const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${id}`
-        this.$http.delete(api).then(res => {
-          console.log(`${title}刪除成功`)
-        })
+        this.$http.delete(api).then(res => {})
       }
     },
     createTypes () {
@@ -394,9 +393,7 @@ export default {
       })
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
       for (let i = 0; i < this.temTypes.length; i++) {
-        this.$http.post(api, { data: this.temTypes[i] }).then(res => {
-          this.pushMessageState(res, '營地種類更新')
-        })
+        this.$http.post(api, { data: this.temTypes[i] }).then(res => {})
       }
     }
   }

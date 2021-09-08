@@ -90,13 +90,13 @@ export default {
   inject: ['pushMessageState'],
   methods: {
     getCoupons (page = 1) {
+      this.currentPage = page
       this.isLoading = true
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/coupons?page=${page}`
       this.$http.get(api).then(res => {
         this.coupons = res.data.coupons
         this.pagination = res.data.pagination
         this.isLoading = false
-        console.log(res)
       })
     },
     openModal (isNew, item) {

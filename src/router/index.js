@@ -53,7 +53,7 @@ const routes = [
       },
       {
         path: 'coupons',
-        component: () => import('../views/Products.vue')
+        component: () => import('../views/Coupons.vue')
       }
     ]
   }

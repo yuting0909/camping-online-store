@@ -122,25 +122,19 @@ export default {
       this.$refs.deleteModal.showModal()
     },
     deleteOrder () {
-      this.$refs.deleteModal.hideModal()
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${this.temOrder.id}`
-      this.isLoading = true
       this.$http.delete(api).then(res => {
-        this.isLoading = false
-        if (res.data.success) {
-          this.getOrders(this.currentPage)
-        }
+        this.pushMessageState(res, '訂單刪除')
+        this.getOrders(this.currentPage)
+        this.$refs.deleteModal.hideModal()
       })
     },
     updatePaid (item) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/order/${item.id}`
       const paid = { is_paid: item.is_paid }
-      this.isLoading = true
       this.$http.put(api, { data: paid }).then(res => {
-        this.isLoading = false
-        if (res.data.success) {
-          this.getOrders(this.currentPage)
-        }
+        this.pushMessageState(res, '訂單更新')
+        this.getOrders(this.currentPage)
       })
     }
   }

@@ -32,14 +32,10 @@ export default {
     }
   },
   watch: {
-    temProduct: {
+    temTypes: {
       handler () {
-        const typeGroup = this.types
-        if (typeGroup && typeGroup.length) {
-          const typePriceArr = typeGroup.map(type => type.price)
-          this.temProduct.origin_price = Math.min(...typePriceArr)
-          this.temProduct.price = Math.max(...typePriceArr)
-        }
+        const priceArr = this.temTypes.map(type => type.price)
+        this.temProduct.price = Math.min(...priceArr)
       },
       deep: true
     }
@@ -87,7 +83,7 @@ export default {
       if (isNew) {
         this.temType = {}
       } else {
-        this.temType = type
+        this.temType = { ...type }
       }
       this.isNew = isNew
       this.$refs.typeModal.showModal()
@@ -106,10 +102,10 @@ export default {
     },
     updateTemType (item) {
       if (this.isNew) {
-        this.temTypes.push(item)
+        this.temTypes.push({ ...item })
       } else {
-        const i = this.temTypes.indexOf(item)
-        this.temTypes[i] = this.temType
+        const i = this.temTypes.indexOf(this.temTypes.find(type => type.id === item.id))
+        this.temTypes[i] = { ...item }
       }
       this.$refs.typeModal.hideModal()
     },

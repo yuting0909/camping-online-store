@@ -333,6 +333,18 @@ export default {
       isLoading: false
     }
   },
+  watch: {
+    temProduct: {
+      handler () {
+        if (this.temTypes.length) {
+          this.temTypes.map(type => {
+            type.belong_to = this.temProduct.title
+          })
+        }
+      },
+      deep: true
+    }
+  },
   mixins: [productMixin],
   created () {
     this.id = this.$route.params.productId
@@ -344,7 +356,7 @@ export default {
       this.isLoading = true
       this.$http.get(api).then(res => {
         this.isLoading = false
-        this.temProduct = res.data.product
+        this.temProduct = res.data.product.features ? res.data.product : { ...res.data.product, features: [] }
         this.getTypes()
       })
     },
@@ -384,13 +396,6 @@ export default {
       }
     },
     createTypes () {
-      this.temTypes.forEach((val, i, arr) => {
-        arr[i] = {
-          belong_to: this.temProduct.title,
-          ...val,
-          category: '營地種類'
-        }
-      })
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
       for (let i = 0; i < this.temTypes.length; i++) {
         this.$http.post(api, { data: this.temTypes[i] }).then(res => {})

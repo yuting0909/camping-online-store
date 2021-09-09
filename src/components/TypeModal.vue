@@ -52,7 +52,15 @@
                   value="帳"
                   v-model="temType.unit"
                 />
-                <label for="unit-2">帳</label>
+                <label class="me-2" for="unit-2">帳</label>
+                <input
+                  class="me-1"
+                  type="radio"
+                  id="unit-3"
+                  value="間"
+                  v-model="temType.unit"
+                />
+                <label for="unit-3">間</label>
               </div>
             </div>
             <div class="row mb-3">

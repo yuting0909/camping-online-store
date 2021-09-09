@@ -21,21 +21,21 @@
   <table class="table mt-4">
     <thead>
       <tr>
-        <th width="120">分類</th>
-        <th width="160">營區名稱</th>
-        <th width="100">原價</th>
-        <th width="100">售價</th>
+        <th width="80">地區</th>
+        <th width="80">縣市</th>
+        <th width="120">營區名稱</th>
+        <th width="160">營區特色</th>
+        <th width="120">最低售價</th>
         <th width="120">是否啟用</th>
-        <th width="200">編輯</th>
+        <th width="160">編輯</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="item in products" :key="item.id">
-        <td>{{ item.category }}</td>
+        <td>{{ item.region }}</td>
+        <td>{{ item.city }}</td>
         <td>{{ item.title }}</td>
-        <td class="text-right">
-          {{ $filters.currency(item.origin_price) }}
-        </td>
+        <td>{{ item.features.join('、') }}</td>
         <td class="text-right">
           {{ $filters.currency(item.price) }}
         </td>
@@ -67,29 +67,29 @@
     ref="deleteModal"
     @del-item="deleteProduct"
   ></delete-modal>
-  <pagination :pages="pagination" @update-page="getProducts" />
 </template>
 
 <script>
 import DeleteModal from '../components/DeleteModal.vue'
-import Pagination from '../components/Pagenation.vue'
 
 export default {
   data () {
     return {
       products: [],
-      pagination: {},
+      types: [],
       temProduct: {},
+      temTypes: [],
       isLoading: false
     }
   },
-  components: { DeleteModal, Pagination },
+  inject: ['pushMessageState'],
+  components: { DeleteModal },
   created () {
     this.getProducts()
   },
   methods: {
-    getProducts (page = 1) {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products?page=${page}`
+    getProducts () {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
       this.isLoading = true
       this.$http.get(api).then(res => {
         this.isLoading = false
@@ -97,7 +97,9 @@ export default {
           this.products = res.data.products.filter(
             product => product.category === '露營區'
           )
-          this.pagination = res.data.pagination
+          this.types = res.data.products.filter(
+            product => product.category === '營地種類'
+          )
         }
       })
     },
@@ -106,6 +108,7 @@ export default {
     },
     openDelModal (item) {
       this.temProduct = { ...item }
+      this.temTypes = this.types.filter(type => type.belong_to === item.title)
       this.$refs.deleteModal.showModal()
     },
     deleteProduct () {
@@ -113,11 +116,18 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.temProduct.id}`
       this.isLoading = true
       this.$http.delete(api).then(res => {
+        this.pushMessageState(res, '營區刪除')
         this.isLoading = false
-        if (res.data.success) {
-          this.getProducts()
-        }
+        this.deleteTypes()
+      }).then(() => {
+        this.getProducts()
       })
+    },
+    deleteTypes () {
+      for (let i = 0; i < this.temTypes.length; i++) {
+        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.temTypes[i].id}`
+        this.$http.delete(api).then(res => {})
+      }
     }
   }
 }

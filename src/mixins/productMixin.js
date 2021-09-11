@@ -101,6 +101,8 @@ export default {
       })
     },
     updateTemType (item) {
+      item.belong_to = this.temProduct.title
+      item.category = '營地種類'
       if (this.isNew) {
         this.temTypes.push({ ...item })
       } else {

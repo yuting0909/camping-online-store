@@ -35,7 +35,8 @@
         <td>{{ item.region }}</td>
         <td>{{ item.city }}</td>
         <td>{{ item.title }}</td>
-        <td>{{ item.features.join('、') }}</td>
+        <td v-if="item.features">{{ item.features.join('、') }}</td>
+        <td v-else>無</td>
         <td class="text-right">
           {{ $filters.currency(item.price) }}
         </td>
@@ -71,6 +72,7 @@
 
 <script>
 import DeleteModal from '../components/DeleteModal.vue'
+import promiseMixin from '../mixins/promiseMixin'
 
 export default {
   data () {
@@ -86,7 +88,9 @@ export default {
   components: { DeleteModal },
   created () {
     this.getProducts()
+    console.log('這是首頁')
   },
+  mixins: [promiseMixin],
   methods: {
     getProducts () {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
@@ -113,21 +117,18 @@ export default {
     },
     deleteProduct () {
       this.$refs.deleteModal.hideModal()
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.temProduct.id}`
       this.isLoading = true
-      this.$http.delete(api).then(res => {
+      const deleteTemTypesPromise = this.temTypes.map(type =>
+        this.deletePromise(type)
+      )
+      this.deletePromise(this.temProduct).then(res => {
+        console.log(res)
         this.pushMessageState(res, '營區刪除')
-        this.isLoading = false
-        this.deleteTypes()
-      }).then(() => {
-        this.getProducts()
+        return Promise.all(deleteTemTypesPromise)
+      }).then(res => {
+        console.log(res)
+        return this.getProducts()
       })
-    },
-    deleteTypes () {
-      for (let i = 0; i < this.temTypes.length; i++) {
-        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.temTypes[i].id}`
-        this.$http.delete(api).then(res => {})
-      }
     }
   }
 }

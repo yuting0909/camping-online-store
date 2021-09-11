@@ -324,6 +324,7 @@
 
 <script>
 import productMixin from '../mixins/productMixin'
+import promiseMixin from '../mixins/promiseMixin'
 
 export default {
   data () {
@@ -345,7 +346,7 @@ export default {
       deep: true
     }
   },
-  mixins: [productMixin],
+  mixins: [productMixin, promiseMixin],
   created () {
     this.id = this.$route.params.productId
     this.getProduct()
@@ -372,34 +373,23 @@ export default {
       })
     },
     updateProduct () {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${this.id}`
-      this.$http
-        .put(api, { data: this.temProduct })
-        .then(res => {
-          this.pushMessageState(res, '營區更新')
-        })
-        .then(() => {
-          this.deleteAllTypes()
-        })
-        .then(() => {
-          this.createTypes()
-        })
-        .then(() => {
-          this.$router.push('/admin/products')
-        })
-    },
-    deleteAllTypes () {
-      for (let i = 0; i < this.types.length; i++) {
-        const id = this.types[i].id
-        const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product/${id}`
-        this.$http.delete(api).then(res => {})
-      }
-    },
-    createTypes () {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
-      for (let i = 0; i < this.temTypes.length; i++) {
-        this.$http.post(api, { data: this.temTypes[i] }).then(res => {})
-      }
+      const createTemTypesPromise = this.temTypes.map(type =>
+        this.createPromise(type)
+      )
+      const deleteTypesPromise = this.types.map(type =>
+        this.deletePromise(type)
+      )
+      this.updatePromise(this.temProduct).then(res => {
+        console.log(res)
+        this.pushMessageState(res, '營區更新')
+        return Promise.all(deleteTypesPromise)
+      }).then(res => {
+        console.log(res)
+        return Promise.all(createTemTypesPromise)
+      }).then(res => {
+        console.log(res)
+        return this.$router.push('/admin/products')
+      })
     }
   }
 }

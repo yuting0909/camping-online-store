@@ -310,6 +310,7 @@
 
 <script>
 import productMixin from '../mixins/productMixin'
+import promiseMixin from '../mixins/promiseMixin'
 
 export default {
   data () {
@@ -326,36 +327,20 @@ export default {
       }
     }
   },
-  mixins: [productMixin],
+  mixins: [productMixin, promiseMixin],
   methods: {
     createProduct () {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
-      this.$http
-        .post(api, { data: this.temProduct })
+      const temTypesPromise = this.temTypes.map(type => this.createPromise(type))
+      this.createPromise(this.temProduct)
         .then(res => {
+          console.log(res)
           this.pushMessageState(res, '營區新增')
+          return Promise.all(temTypesPromise)
         })
-        .then(() => {
-          this.createTypes()
+        .then(res => {
+          console.log(res)
+          return this.$router.push('/admin/products')
         })
-        .then(() => {
-          this.$router.push('/admin/products')
-        })
-    },
-    createTypes () {
-      this.temTypes.forEach((val, i, arr) => {
-        arr[i] = {
-          belong_to: this.temProduct.title,
-          ...val,
-          category: '營地種類'
-        }
-      })
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/product`
-      for (let i = 0; i < this.temTypes.length; i++) {
-        this.$http.post(api, { data: this.temTypes[i] }).then(res => {
-          this.pushMessageState(res, '營地種類新增')
-        })
-      }
     }
   }
 }

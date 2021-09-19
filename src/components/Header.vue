@@ -40,7 +40,7 @@
         <div class="container-fluid">
           <ul class="navbar-nav">
             <li class="nav-item px-lg-3">
-              <router-link to="/" class="nav-link">品牌故事 STORY</router-link>
+              <router-link to="/about" class="nav-link">品牌故事 STORY</router-link>
             </li>
             <li class="nav-item px-lg-3">
               <router-link to="/" class="nav-link">找營區 CAMPSITE</router-link>
@@ -70,7 +70,7 @@
           <div class="collapse navbar-collapse justify-content-center">
             <ul class="navbar-nav">
               <li class="nav-item px-lg-3">
-                <router-link to="/" class="nav-link"
+                <router-link to="/about" class="nav-link"
                   >品牌故事 STORY</router-link
                 >
               </li>

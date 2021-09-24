@@ -64,7 +64,7 @@
 
 <style lang="scss">
 .category-group {
-  background-image: url('../assets/home-bg.jpeg');
+  background-image: url('/images/home/home-bg.jpeg');
   background-position: bottom;
   background-repeat: no-repeat;
 }
@@ -189,18 +189,18 @@ export default {
   data () {
     return {
       themeList: [
-        { title: '森林系', imgUrl: require('../assets/theme-list-01.jpg') },
-        { title: '觀夜景', imgUrl: require('../assets/theme-list-02.jpg') },
-        { title: '賞雲海', imgUrl: require('../assets/theme-list-03.jpg') },
-        { title: '親子遊樂', imgUrl: require('../assets/theme-list-04.jpg') },
-        { title: '免裝備', imgUrl: require('../assets/theme-list-05.jpg') },
-        { title: '新手露營', imgUrl: require('../assets/theme-list-06.jpg') }
+        { title: '森林系', imgUrl: '/images/home/home-theme-01.jpg' },
+        { title: '觀夜景', imgUrl: '/images/home/home-theme-02.jpg' },
+        { title: '賞雲海', imgUrl: '/images/home/home-theme-03.jpg' },
+        { title: '親子遊樂', imgUrl: '/images/home/home-theme-04.jpg' },
+        { title: '免裝備', imgUrl: '/images/home/home-theme-05.jpg' },
+        { title: '新手露營', imgUrl: '/images/home/home-theme-06.jpg' }
       ],
       regions: [
-        { title: '北部', imgUrl: require('../assets/region-list-01.jpg') },
-        { title: '中部', imgUrl: require('../assets/region-list-02.jpg') },
-        { title: '南部', imgUrl: require('../assets/region-list-03.jpg') },
-        { title: '東部', imgUrl: require('../assets/region-list-04.jpg') }
+        { title: '北部', imgUrl: '/images/home/home-region-01.jpg' },
+        { title: '中部', imgUrl: '/images/home/home-region-02.jpg' },
+        { title: '南部', imgUrl: '/images/home/home-region-03.jpg' },
+        { title: '東部', imgUrl: '/images/home/home-region-04.jpg' }
       ]
     }
   }

@@ -13,8 +13,6 @@
           :key="i"
           class="slide-item h-100"
           :style="{ backgroundImage: `url(${carousel.imgUrl})` }"
-          @mouseout="autoStart"
-          @mouseover="autoStop"
         >
           <div class="slide-caption py-3 px-5">
             <h1>{{ carousel.title }}</h1>
@@ -99,19 +97,20 @@ export default {
         {
           title: '森呼吸',
           text: '在森林浴中吸取樹木產生的芬多精，夜晚與杉木相伴共眠',
-          imgUrl: require('../assets/slide-show-01.jpg')
+          imgUrl: '/images/home/home-slider-01.jpg'
         },
         {
           title: '團聚好時光',
           text:
             '假期就是要一家人團聚、或是找好朋友出遊，烤肉、聊天、小酌幾杯，享受悠閒的歡樂時光',
-          imgUrl: require('../assets/slide-show-02.jpg')
+          imgUrl: '/images/home/home-slider-02.jpg'
         },
         {
           title: '懶人露營',
           text:
             '免裝備、免自備炊具，更不用自己親手搭帳，就能體驗野外生活的悠閒愜意',
-          imgUrl: require('../assets/slide-show-03.jpg')
+          imgUrl: '/images/home/home-slider-03.jpg'
+
         }
       ],
       index: 0,

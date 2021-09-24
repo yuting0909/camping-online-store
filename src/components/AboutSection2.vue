@@ -70,7 +70,7 @@
     width: 500px;
     height: 585px;
     margin: 60px auto 0 0;
-    background-image: url('../assets/about-2.jpg');
+    background-image: url('/images/about/about-02.jpg');
     background-position: center bottom;
     @include media-breakpoint-down(xl) {
       width: 400px;
@@ -95,7 +95,7 @@
     width: 650px;
     height: 405px;
     margin: -45px 207px 0 auto;
-    background-image: url('../assets/about-3.jpg');
+    background-image: url('/images/about/about-03.jpg');
     @include media-breakpoint-down(xl) {
       width: 500px;
       height: 345px;

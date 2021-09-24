@@ -9,7 +9,7 @@
 <style lang="scss">
 .about-section-1 {
   height: 400px;
-  background-image: url('../assets/about-1.jpg');
+  background-image: url('/images/about/about-01.jpg');
   object-fit: cover;
   background-size: cover;
   background-position: center;

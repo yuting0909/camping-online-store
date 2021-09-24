@@ -1,7 +1,7 @@
 <template>
   <div class="home-epaper">
     <div class="container-fluid py-5 px-4 text-light">
-      <h2>訂閱我們</h2>
+      <h2>訂閱電子報</h2>
       <p>歡迎訂閱 icamping 電子報，我們將不定期寄發給您最新的優惠與活動訊息。</p>
       <form class="w-70 w-lg-50">
         <div class="row mb-3">
@@ -23,7 +23,7 @@
 
 <style lang="scss">
 .home-epaper {
-  background-image: url('../assets/home-contact-bg.jpg');
+  background-image: url('/images/home/home-epaper-bg.jpg');
   background-size: cover;
   background-position: bottom;
   background-attachment: fixed;

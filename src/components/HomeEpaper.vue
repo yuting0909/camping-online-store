@@ -1,5 +1,5 @@
 <template>
-  <div class="home-epaper">
+  <section class="home-epaper">
     <div class="container-fluid py-5 px-4 text-light">
       <h2>訂閱電子報</h2>
       <p>歡迎訂閱 icamping 電子報，我們將不定期寄發給您最新的優惠與活動訊息。</p>
@@ -18,7 +18,7 @@
         </div>
       </form>
     </div>
-  </div>
+  </section>
 </template>
 
 <style lang="scss">

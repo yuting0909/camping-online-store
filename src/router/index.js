@@ -18,10 +18,17 @@ const routes = [
     }
   },
   {
+    path: '/products',
+    component: () => import('../views/Products.vue'),
+    meta: {
+      navShow: true
+    }
+  },
+  {
     path: '/login',
     component: () => import('../views/Login.vue'),
     meta: {
-      navShow: false
+      navShow: true
     }
   },
   {
@@ -33,7 +40,7 @@ const routes = [
     children: [
       {
         path: 'products',
-        component: () => import('../views/Products.vue')
+        component: () => import('../views/AdminProducts.vue')
       },
       {
         path: 'create-product',

@@ -53,8 +53,7 @@ export default {
     slideIn () {
       const sliderContent = this.$refs.sliderContent
       const slideInAt = window.scrollY + window.innerHeight
-      const contentBottom =
-        sliderContent.offsetTop + sliderContent.offsetHeight
+      const contentBottom = sliderContent.offsetTop + sliderContent.offsetHeight
       if (slideInAt > contentBottom) {
         this.slide_in = true
       }
@@ -62,6 +61,9 @@ export default {
   },
   mounted () {
     window.addEventListener('scroll', this.slideIn)
+  },
+  unmounted () {
+    window.removeEventListener('scroll', this.slideIn)
   }
 }
 </script>

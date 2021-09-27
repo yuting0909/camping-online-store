@@ -1,5 +1,5 @@
 <template>
-  <div class="slider vw-100">
+  <section class="slider vw-100">
     <div
       class="slider-container position-relative w-100"
       @mouseenter.stop="stopPlay"
@@ -33,7 +33,7 @@
         ></button>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style lang="scss">
@@ -42,7 +42,7 @@
 }
 .slide {
   background-size: cover;
-  background-position: 50% 70%;
+  background-position: 50% 80%;
 }
 .slide-caption {
   position: absolute;

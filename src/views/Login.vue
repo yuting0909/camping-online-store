@@ -44,7 +44,7 @@
               />
             </div>
             <br />
-            <div class="d-grid mb-5">
+            <div class="d-grid mb-4">
               <button
                 class="btn btn-primary btn-lg btn-block rounded-3 fw-bold text-light"
                 type="submit"
@@ -52,6 +52,7 @@
                 登入
               </button>
             </div>
+            <router-link to="/" class="d-block w-fit m-auto">回首頁</router-link>
           </form>
         </div>
       </div>

@@ -1,8 +1,10 @@
 <template>
   <Header></Header>
-  <about-section-1></about-section-1>
-  <about-section-2></about-section-2>
-  <about-section-3></about-section-3>
+  <main id="about">
+    <about-section-1></about-section-1>
+    <about-section-2></about-section-2>
+    <about-section-3></about-section-3>
+  </main>
   <Footer></Footer>
 </template>
 

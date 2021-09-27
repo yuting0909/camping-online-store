@@ -252,7 +252,8 @@ export default {
     Content2SlideIn () {
       const sliderContent = this.$refs.sliderContent2
       const slideInAt = window.scrollY + window.innerHeight
-      const contentBottom = sliderContent.offsetTop + sliderContent.offsetHeight / 2
+      const contentBottom =
+        sliderContent.offsetTop + sliderContent.offsetHeight / 2
       if (slideInAt > contentBottom) {
         this.content_2.active = true
       }
@@ -260,7 +261,8 @@ export default {
     Content3SlideIn () {
       const sliderContent = this.$refs.sliderContent3
       const slideInAt = window.scrollY + window.innerHeight
-      const contentBottom = sliderContent.offsetTop + sliderContent.offsetHeight / 2
+      const contentBottom =
+        sliderContent.offsetTop + sliderContent.offsetHeight / 2
       if (slideInAt > contentBottom) {
         this.content_3.active = true
       }
@@ -269,6 +271,10 @@ export default {
   mounted () {
     window.addEventListener('scroll', this.Content2SlideIn)
     window.addEventListener('scroll', this.Content3SlideIn)
+  },
+  unmounted () {
+    window.removeEventListener('scroll', this.Content2SlideIn)
+    window.removeEventListener('scroll', this.Content3SlideIn)
   }
 }
 </script>

@@ -1,135 +1,24 @@
 <template>
-  <Loading :active="isLoading">
-    <div class="loadingio-spinner-spin-xmpavumjb">
-      <div class="ldio-ylwm2fadiqf">
-        <div><div></div></div>
-        <div><div></div></div>
-        <div><div></div></div>
-        <div><div></div></div>
-        <div><div></div></div>
-        <div><div></div></div>
-        <div><div></div></div>
-        <div><div></div></div>
-      </div>
-    </div>
-  </Loading>
-  <div class="text-end mt-4">
-    <router-link to="/admin/create-product" class="btn btn-primary"
-      >建立營區</router-link
-    >
-  </div>
-  <table class="table mt-4">
-    <thead>
-      <tr>
-        <th width="80">地區</th>
-        <th width="80">縣市</th>
-        <th width="120">營區名稱</th>
-        <th width="160">營區特色</th>
-        <th width="120">最低售價</th>
-        <th width="120">是否啟用</th>
-        <th width="160">編輯</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="item in products" :key="item.id">
-        <td>{{ item.region }}</td>
-        <td>{{ item.city }}</td>
-        <td>{{ item.title }}</td>
-        <td v-if="item.features">{{ item.features.join('、') }}</td>
-        <td v-else>無</td>
-        <td class="text-right">
-          {{ $filters.currency(item.price) }}
-        </td>
-        <td>
-          <span class="text-success" v-if="item.is_enabled">啟用</span>
-          <span class="text-muted" v-else>未啟用</span>
-        </td>
-        <td>
-          <div class="btn-group">
-            <button
-              class="btn btn-outline-primary btn-sm"
-              @click="getProduct(item.id)"
-            >
-              編輯
-            </button>
-            <button
-              class="btn btn-outline-danger btn-sm"
-              @click="openDelModal(item)"
-            >
-              刪除
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <delete-modal
-    :item="temProduct"
-    ref="deleteModal"
-    @del-item="deleteProduct"
-  ></delete-modal>
+  <Header></Header>
+  <main id="user-products">
+    <product-section-1></product-section-1>
+    <product-section-2></product-section-2>
+  </main>
+  <Footer></Footer>
 </template>
 
 <script>
-import DeleteModal from '../components/DeleteModal.vue'
-import promiseMixin from '../mixins/promiseMixin'
+import Header from '@/components/Header.vue'
+import ProductSection1 from '@/components/ProductSection1.vue'
+import ProductSection2 from '@/components/ProductSection2.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
-  data () {
-    return {
-      products: [],
-      types: [],
-      temProduct: {},
-      temTypes: [],
-      isLoading: false
-    }
-  },
-  inject: ['pushMessageState'],
-  components: { DeleteModal },
-  created () {
-    this.getProducts()
-    console.log('這是首頁')
-  },
-  mixins: [promiseMixin],
-  methods: {
-    getProducts () {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
-      this.isLoading = true
-      this.$http.get(api).then(res => {
-        this.isLoading = false
-        if (res.data.success) {
-          this.products = res.data.products.filter(
-            product => product.category === '露營區'
-          )
-          this.types = res.data.products.filter(
-            product => product.category === '營地種類'
-          )
-        }
-      })
-    },
-    getProduct (id) {
-      this.$router.push(`/admin/products/${id}`)
-    },
-    openDelModal (item) {
-      this.temProduct = { ...item }
-      this.temTypes = this.types.filter(type => type.belong_to === item.title)
-      this.$refs.deleteModal.showModal()
-    },
-    deleteProduct () {
-      this.$refs.deleteModal.hideModal()
-      this.isLoading = true
-      const deleteTemTypesPromise = this.temTypes.map(type =>
-        this.deletePromise(type)
-      )
-      this.deletePromise(this.temProduct).then(res => {
-        console.log(res)
-        this.pushMessageState(res, '營區刪除')
-        return Promise.all(deleteTemTypesPromise)
-      }).then(res => {
-        console.log(res)
-        return this.getProducts()
-      })
-    }
+  components: {
+    Header,
+    ProductSection1,
+    ProductSection2,
+    Footer
   }
 }
 </script>

@@ -40,10 +40,12 @@
         <div class="container-fluid">
           <ul class="navbar-nav">
             <li class="nav-item px-lg-3">
-              <router-link to="/about" class="nav-link">品牌故事 STORY</router-link>
+              <router-link to="/about" class="nav-link"
+                >品牌故事 STORY</router-link
+              >
             </li>
             <li class="nav-item px-lg-3">
-              <router-link to="/" class="nav-link">找營區 CAMPSITE</router-link>
+              <router-link to="/products" class="nav-link">找營區 CAMPSITE</router-link>
             </li>
             <li class="nav-item px-lg-3">
               <router-link to="/login" class="nav-link">登入 LOGIN</router-link>
@@ -75,7 +77,7 @@
                 >
               </li>
               <li class="nav-item px-lg-3">
-                <router-link to="/" class="nav-link"
+                <router-link to="/products" class="nav-link"
                   >找營區 CAMPSITE</router-link
                 >
               </li>
@@ -107,7 +109,8 @@
   max-height: 60px;
   min-width: 120px;
 }
-header, #headerNavbar {
+header,
+#headerNavbar {
   z-index: 999;
 }
 </style>
@@ -120,12 +123,15 @@ export default {
     }
   },
   methods: {
-    scroll () {
+    scrollHandler () {
       this.positionFixed = window.scrollY > this.$refs.headerNavbar.offsetTop
     }
   },
   mounted () {
-    window.addEventListener('scroll', this.scroll)
+    window.addEventListener('scroll', this.scrollHandler)
+  },
+  unmounted () {
+    window.removeEventListener('scroll', this.scrollHandler)
   }
 }
 </script>

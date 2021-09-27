@@ -1,5 +1,5 @@
 <template>
-  <div class="news">
+  <section class="news">
     <div class="container py-5">
       <h2 class="m-auto pb-3 mb-5 border-bottom border-primary border-4 w-fit">
         最新消息
@@ -10,7 +10,7 @@
         </li>
       </ul>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="slider vw-100">
+  <section class="slider vw-100">
     <div class="slider-container position-relative overflow-hidden">
       <div
         class="slides h-100"
@@ -31,7 +31,7 @@
         ></button>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style lang="scss">

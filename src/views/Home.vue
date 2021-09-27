@@ -1,13 +1,13 @@
 <template>
-  <div class="home">
-    <Header></Header>
+  <Header></Header>
+  <main id="home">
     <!-- <home-slider></home-slider> -->
     <home-slider-fixed></home-slider-fixed>
     <home-news></home-news>
     <home-category></home-category>
     <home-epaper></home-epaper>
-    <Footer></Footer>
-  </div>
+  </main>
+  <Footer></Footer>
 </template>
 
 <script>

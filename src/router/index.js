@@ -25,6 +25,10 @@ const routes = [
     }
   },
   {
+    path: '/products/:productId',
+    component: () => import('../views/Product.vue')
+  },
+  {
     path: '/login',
     component: () => import('../views/Login.vue'),
     meta: {

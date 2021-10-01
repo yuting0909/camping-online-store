@@ -1,5 +1,7 @@
 <template>
-  <header class="position-fixed position-md-static bg-white w-100">
+  <header
+    class="position-fixed position-md-static bg-white overflow-hidden w-100"
+  >
     <div class="row px-3 border-bottom shadow-sm">
       <div class="col my-auto d-md-none">
         <a
@@ -30,8 +32,13 @@
         </router-link>
       </div>
       <div class="col my-auto d-md-none">
-        <router-link to="/" class="fs-5 float-end"
-          ><i class="bi bi-bag"></i>
+        <router-link to="/" class="fs-4 float-end d-flex align-items-center"
+          ><i class="bi bi-cart4"></i>
+          <span
+            class="badge fs-8 bg-primary rounded-pill"
+          >
+            {{ cart.length }}
+          </span>
         </router-link>
       </div>
     </div>
@@ -45,7 +52,9 @@
               >
             </li>
             <li class="nav-item px-lg-3">
-              <router-link to="/products" class="nav-link">找營區 CAMPSITE</router-link>
+              <router-link to="/products" class="nav-link"
+                >找營區 CAMPSITE</router-link
+              >
             </li>
             <li class="nav-item px-lg-3">
               <router-link to="/login" class="nav-link">登入 LOGIN</router-link>
@@ -54,7 +63,8 @@
               <router-link
                 to="/"
                 class="btn btn-warning text-light rounded-pill nav-link py-1 px-3"
-                ><i class="bi bi-bag"></i> <small> 0 件商品</small>
+                ><i class="bi bi-bag me-2"></i>
+                <small> {{ cart.length }} 件商品</small>
               </router-link>
             </li>
           </ul>
@@ -90,7 +100,8 @@
                 <router-link
                   to="/"
                   class="btn btn-warning text-light rounded-pill nav-link py-1 px-3"
-                  ><i class="bi bi-bag"></i> <small> 0 件商品</small>
+                  ><i class="bi bi-bag me-2"></i>
+                  <small> {{ cart.length }} 件商品</small>
                 </router-link>
               </li>
             </ul>
@@ -116,16 +127,37 @@ header,
 </style>
 
 <script>
+import emitter from '../methods/emitter'
+
 export default {
   data () {
     return {
-      positionFixed: false
+      positionFixed: false,
+      cart: []
     }
   },
   methods: {
     scrollHandler () {
       this.positionFixed = window.scrollY > this.$refs.headerNavbar.offsetTop
+    },
+    getCarts () {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
+      this.$http.get(url).then(res => {
+        this.cart = res.data.data.carts
+      })
     }
+    // removeCarts () {
+    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/carts`
+    //   this.$http.delete(url).then(res => {
+    //     console.log(res.data)
+    //   })
+    // }
+  },
+  created () {
+    this.getCarts()
+    emitter.on('sendCart', cart => {
+      this.cart = cart
+    })
   },
   mounted () {
     window.addEventListener('scroll', this.scrollHandler)

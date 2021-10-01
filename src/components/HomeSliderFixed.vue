@@ -1,5 +1,5 @@
 <template>
-  <section class="slider vw-100">
+  <section class="slider">
     <div
       class="slider-container position-relative w-100"
       @mouseenter.stop="stopPlay"

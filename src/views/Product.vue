@@ -15,8 +15,8 @@
   </Loading>
   <Header></Header>
   <main :id="`product-introduction${id}`" class="product-intro pt-5 pt-md-0">
-    <product-section-1 :product="product" :features="features"></product-section-1>
-    <product-section-2 :types="types"></product-section-2>
+    <product-section-1 v-if="product.city" :id="id" :product="product" :features="features"></product-section-1>
+    <product-section-2 :product="product" :types="types"></product-section-2>
   </main>
   <Footer></Footer>
 </template>

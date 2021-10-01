@@ -13,6 +13,7 @@
   background-size: cover;
   background-position: center 70%;
   position: relative;
+  overflow: hidden;
   h1 {
     background-color: rgba(41, 41, 41, 0.6);
     position: absolute;

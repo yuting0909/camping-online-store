@@ -26,7 +26,7 @@
                 <template v-for="(region, i) in regions" :key="i">
                   <input
                     type="checkbox"
-                    class="btn-check"
+                    class="btn-check btn-hover-white"
                     :id="region"
                     :value="region"
                     autocomplete="off"
@@ -44,7 +44,7 @@
                 <template v-for="(feature, i) in features" :key="i">
                   <input
                     type="checkbox"
-                    class="btn-check"
+                    class="btn-check btn-hover-white"
                     :id="feature"
                     :value="feature"
                     autocomplete="off"

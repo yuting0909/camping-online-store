@@ -39,6 +39,20 @@ const routes = [
     }
   },
   {
+    path: '/order',
+    component: () => import('../views/Order.vue'),
+    meta: {
+      show: true
+    }
+  },
+  {
+    path: '/checkout/:orderId',
+    component: () => import('../views/Checkout.vue'),
+    meta: {
+      show: true
+    }
+  },
+  {
     path: '/login',
     component: () => import('../views/Login.vue'),
     meta: {
@@ -66,11 +80,11 @@ const routes = [
       },
       {
         path: 'orders',
-        component: () => import('../views/Orders.vue')
+        component: () => import('../views/AdminOrders.vue')
       },
       {
         path: 'coupons',
-        component: () => import('../views/Coupons.vue')
+        component: () => import('../views/AdminCoupons.vue')
       }
     ]
   }

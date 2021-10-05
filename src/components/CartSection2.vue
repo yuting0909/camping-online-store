@@ -155,7 +155,7 @@
         </table>
       </div>
       <div class="row justify-content-end">
-        <div class="col-sm-10 col-lg-6">
+        <div class="col-sm-8 col-lg-6">
           <div class="input-group mb-3 input-group-sm">
             <input
               type="text"
@@ -173,21 +173,28 @@
               </button>
             </div>
           </div>
-          <div
-            class="d-flex flex-column flex-sm-row justify-content-sm-end align-items-sm-center mb-3"
-          >
-            <a href="#/products" class="mb-3 mb-sm-0 btn btn-outline-info rounded-0 px-3"
-              ><i class="bi bi-caret-left-fill"></i> 繼續購物
-            </a>
-            <span class="flex-fill mb-3 mb-sm-0 mx-sm-3 text-end"
-              >總金額：
-              <span class="text-warning fs-5 fw-bold"
-                >NT$ {{ $filters.currency(cart.final_total) }}</span
-              ></span
+          <div class="mb-3 text-end">
+            總金額：
+            <span class="text-warning fs-5 fw-bold"
+              >NT$ {{ $filters.currency(cart.final_total) }}</span
             >
-            <a href="#/order" class="btn btn-outline-info rounded-0 px-3"
-              >去買單 <i class="bi bi-caret-right-fill"></i>
-            </a>
+          </div>
+          <div class="row">
+            <div class="col-sm-5">
+              <a
+                href="#/products"
+                class="w-100 mb-3 btn btn-outline-success rounded-0 px-3"
+                ><i class="bi bi-caret-left-fill"></i> 繼續購物
+              </a>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-5">
+              <a
+                href="#/order"
+                class="w-100 mb-3 btn btn-success text-white rounded-0 px-3"
+                >前往結帳 <i class="bi bi-caret-right-fill"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>

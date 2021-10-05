@@ -7,39 +7,49 @@ const routes = [
     name: 'Home',
     component: Home,
     meta: {
-      navShow: true
+      show: true
     }
   },
   {
     path: '/about',
     component: () => import('../views/About.vue'),
     meta: {
-      navShow: true
+      show: true
     }
   },
   {
     path: '/products',
     component: () => import('../views/Products.vue'),
     meta: {
-      navShow: true
+      show: true
     }
   },
   {
     path: '/products/:productId',
-    component: () => import('../views/Product.vue')
+    component: () => import('../views/Product.vue'),
+    meta: {
+      show: true
+    }
+  },
+  {
+    path: '/cart',
+    component: () => import('../views/Cart.vue'),
+    meta: {
+      show: true
+    }
   },
   {
     path: '/login',
     component: () => import('../views/Login.vue'),
     meta: {
-      navShow: true
+      show: false
     }
   },
   {
     path: '/admin',
     component: () => import('../views/Dashboard.vue'),
     meta: {
-      navShow: false
+      show: false
     },
     children: [
       {

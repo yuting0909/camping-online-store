@@ -34,9 +34,7 @@
       <div class="col my-auto d-md-none">
         <router-link to="/" class="fs-4 float-end d-flex align-items-center"
           ><i class="bi bi-cart4"></i>
-          <span
-            class="badge fs-8 bg-primary rounded-pill"
-          >
+          <span class="badge fs-8 bg-primary rounded-pill">
             {{ cart.length }}
           </span>
         </router-link>
@@ -59,9 +57,9 @@
             <li class="nav-item px-lg-3">
               <router-link to="/login" class="nav-link">登入 LOGIN</router-link>
             </li>
-            <li class="nav-item px-lg-3 my-auto d-none d-md-block">
+            <li v-if="cart" class="nav-item px-lg-3 my-auto d-none d-md-block">
               <router-link
-                to="/"
+                to="/cart"
                 class="btn btn-warning text-light rounded-pill nav-link py-1 px-3"
                 ><i class="bi bi-bag me-2"></i>
                 <small> {{ cart.length }} 件商品</small>
@@ -96,9 +94,12 @@
                   >登入 LOGIN</router-link
                 >
               </li>
-              <li class="nav-item px-lg-3 my-auto d-none d-md-block">
+              <li
+                v-if="cart"
+                class="nav-item px-lg-3 my-auto d-none d-md-block"
+              >
                 <router-link
-                  to="/"
+                  to="/cart"
                   class="btn btn-warning text-light rounded-pill nav-link py-1 px-3"
                   ><i class="bi bi-bag me-2"></i>
                   <small> {{ cart.length }} 件商品</small>

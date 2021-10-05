@@ -7,13 +7,22 @@
 </template>
 
 <style lang="scss">
+@import '~bootstrap/scss/functions';
+@import '../style/custom/_variables';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/utilities';
+
 .banner {
-  height: 400px;
+  height: 200px;
   object-fit: cover;
   background-size: cover;
   background-position: center 70%;
   position: relative;
   overflow: hidden;
+  @include media-breakpoint-up(sm) {
+    height: 400px;
+  }
   h1 {
     background-color: rgba(41, 41, 41, 0.6);
     position: absolute;

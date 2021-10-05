@@ -13,24 +13,18 @@
       </div>
     </div>
   </Loading>
-  <Header></Header>
   <main :id="`product-introduction${id}`" class="product-intro pt-5 pt-md-0">
     <product-section-1 v-if="product.city" :id="id" :product="product" :features="features"></product-section-1>
     <product-section-2 :product="product" :types="types"></product-section-2>
   </main>
-  <Footer></Footer>
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
 import ProductSection1 from '@/components/ProductSection1.vue'
 import ProductSection2 from '@/components/ProductSection2.vue'
 
 export default {
   components: {
-    Header,
-    Footer,
     ProductSection1,
     ProductSection2
   },

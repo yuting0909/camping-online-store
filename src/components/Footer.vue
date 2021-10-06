@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer class="mt-auto">
     <div class="container text-center py-4">
       <router-link to="/">
         <img width="100" src="../assets/logo.png" alt="icamping" />

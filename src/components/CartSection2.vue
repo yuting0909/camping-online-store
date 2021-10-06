@@ -14,7 +14,7 @@
     </div>
   </Loading>
   <section class="cart-section-2">
-    <div class="container py-5">
+    <div v-if="cart.total" class="container py-5">
       <div class="table-responsive">
         <table class="table border-light">
           <thead class="bg-info text-white">
@@ -198,6 +198,10 @@
           </div>
         </div>
       </div>
+    </div>
+    <div v-else class="container py-5">
+      <h2 class="fw-bold mb-3">目前還沒有加入商品喔</h2>
+      <a href="#/products" class="btn btn-primary">尋找喜歡的露營區 <i class="bi bi-caret-right-fill"></i></a>
     </div>
   </section>
 </template>

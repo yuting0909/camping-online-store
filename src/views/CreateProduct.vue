@@ -78,21 +78,37 @@
           <textarea
             type="text"
             class="form-control"
+            rows="10"
             id="description"
             placeholder="請輸入營區描述"
             v-model="temProduct.description"
           ></textarea>
         </div>
+
         <div class="mb-3">
-          <label for="content" class="form-label">注意事項</label>
+          <label for="content" class="form-label">營區須知</label>
           <textarea
             type="text"
             class="form-control"
+            rows="10"
             id="content"
-            placeholder="請輸入營區注意事項"
+            placeholder="請輸入營區營區須知"
             v-model="temProduct.content"
           ></textarea>
         </div>
+
+        <div class="mb-3">
+          <label for="notice" class="form-label">注意事項</label>
+          <textarea
+            type="text"
+            class="form-control"
+            rows="10"
+            id="notice"
+            placeholder="請輸入營區注意事項"
+            v-model="temProduct.notice"
+          ></textarea>
+        </div>
+
         <div class="mb-3">
           <div class="form-check">
             <input
@@ -175,7 +191,7 @@
                 type="file"
                 class="form-control"
                 :ref="setItemRef"
-                @change="uploadFileMore(key)"
+                @change="uploadMoreFiles(key)"
               />
             </div>
             <div class="mb-3">

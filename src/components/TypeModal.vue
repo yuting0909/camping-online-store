@@ -97,6 +97,7 @@
                 <textarea
                   type="text"
                   class="form-control"
+                  rows="6"
                   id="type-1-content"
                   placeholder="請輸入備註內容"
                   v-model="temType.content"

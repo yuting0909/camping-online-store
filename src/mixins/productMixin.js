@@ -34,9 +34,13 @@ export default {
   },
   watch: {
     temTypes: {
-      handler () {
-        const priceArr = this.temTypes.map(type => type.price)
-        this.temProduct.price = Math.min(...priceArr)
+      handler (n, o) {
+        if (n.length) {
+          const priceArr = this.temTypes.map(type => type.price)
+          this.temProduct.price = Math.min(...priceArr)
+        } else {
+          this.temProduct.price = 0
+        }
       },
       deep: true
     }
@@ -60,21 +64,25 @@ export default {
     },
     uploadFile () {
       const file = this.$refs.fileInput.files[0]
+      console.log(file)
       const formData = new FormData()
       formData.append('file-to-upload', file)
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
       this.$http.post(api, formData).then(response => {
+        console.log(response.data)
         if (response.data.success) {
           this.temProduct.imageUrl = response.data.imageUrl
         }
       })
     },
-    uploadFileMore (key) {
+    uploadMoreFiles (key) {
       const file = this.itemRefs[key].files[0]
+      console.log(file)
       const formData = new FormData()
       formData.append('file-to-upload', file)
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
       this.$http.post(api, formData).then(response => {
+        console.log(response.data)
         if (response.data.success) {
           this.temProduct.images[key] = response.data.imageUrl
         }
@@ -107,7 +115,9 @@ export default {
       if (this.isNew) {
         this.temTypes.push({ ...item })
       } else {
-        const i = this.temTypes.indexOf(this.temTypes.find(type => type.id === item.id))
+        const i = this.temTypes.indexOf(
+          this.temTypes.find(type => type.id === item.id)
+        )
         this.temTypes[i] = { ...item }
       }
       this.$refs.typeModal.hideModal()

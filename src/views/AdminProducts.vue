@@ -25,7 +25,6 @@
         <th width="80">縣市</th>
         <th width="120">營區名稱</th>
         <th width="160">營區特色</th>
-        <th width="120">最低售價</th>
         <th width="120">是否啟用</th>
         <th width="160">編輯</th>
       </tr>
@@ -37,9 +36,6 @@
         <td>{{ item.title }}</td>
         <td v-if="item.features">{{ item.features.join('、') }}</td>
         <td v-else>無</td>
-        <td class="text-right">
-          {{ $filters.currency(item.price) }}
-        </td>
         <td>
           <span class="text-success" v-if="item.is_enabled">啟用</span>
           <span class="text-muted" v-else>未啟用</span>
@@ -93,15 +89,16 @@ export default {
   mixins: [promiseMixin],
   methods: {
     getProducts () {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`
       this.isLoading = true
       this.$http.get(api).then(res => {
         this.isLoading = false
+        console.log(res.data)
         if (res.data.success) {
-          this.products = res.data.products.filter(
+          this.products = Object.values(res.data.products).filter(
             product => product.category === '露營區'
           )
-          this.types = res.data.products.filter(
+          this.types = Object.values(res.data.products).filter(
             product => product.category === '營地種類'
           )
         }

@@ -81,7 +81,7 @@
         </div>
         <div class="col-lg-10">
           <div class="line-break lh-lg">
-            {{ product.content }}
+            {{ product.notice }}
           </div>
         </div>
       </div>

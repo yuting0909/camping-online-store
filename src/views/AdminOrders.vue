@@ -95,6 +95,7 @@ export default {
       currentPage: 1
     }
   },
+  inject: ['pushMessageState'],
   components: { OrderModal, DeleteModal, Pagination },
   created () {
     this.getOrders()

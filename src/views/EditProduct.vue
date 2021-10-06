@@ -92,21 +92,37 @@
           <textarea
             type="text"
             class="form-control"
+            rows="10"
             id="description"
             placeholder="請輸入營區描述"
             v-model="temProduct.description"
           ></textarea>
         </div>
+
         <div class="mb-3">
-          <label for="content" class="form-label">注意事項</label>
+          <label for="content" class="form-label">營區須知</label>
           <textarea
             type="text"
             class="form-control"
+            rows="10"
             id="content"
-            placeholder="請輸入營區注意事項"
+            placeholder="請輸入營區營區須知"
             v-model="temProduct.content"
           ></textarea>
         </div>
+
+        <div class="mb-3">
+          <label for="notice" class="form-label">注意事項</label>
+          <textarea
+            type="text"
+            class="form-control"
+            rows="10"
+            id="notice"
+            placeholder="請輸入營區注意事項"
+            v-model="temProduct.notice"
+          ></textarea>
+        </div>
+
         <div class="mb-3">
           <div class="form-check">
             <input
@@ -189,7 +205,7 @@
                 type="file"
                 class="form-control"
                 :ref="setItemRef"
-                @change="uploadFileMore(key)"
+                @change="uploadMoreFiles(key)"
               />
             </div>
             <div class="mb-3">
@@ -353,11 +369,17 @@ export default {
   },
   methods: {
     getProduct () {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.id}`
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
       this.isLoading = true
       this.$http.get(api).then(res => {
         this.isLoading = false
-        this.temProduct = res.data.product.features ? res.data.product : { ...res.data.product, features: [] }
+        console.log(res.data)
+        const product = res.data.products.find(
+          product => product.id === this.id
+        )
+        this.temProduct = product.features
+          ? product
+          : { ...product, features: [] }
         this.getTypes()
       })
     },
@@ -379,17 +401,20 @@ export default {
       const deleteTypesPromise = this.types.map(type =>
         this.deletePromise(type)
       )
-      this.updatePromise(this.temProduct).then(res => {
-        console.log(res)
-        this.pushMessageState(res, '營區更新')
-        return Promise.all(deleteTypesPromise)
-      }).then(res => {
-        console.log(res)
-        return Promise.all(createTemTypesPromise)
-      }).then(res => {
-        console.log(res)
-        return this.$router.push('/admin/products')
-      })
+      this.updatePromise(this.temProduct)
+        .then(res => {
+          console.log(res)
+          this.pushMessageState(res, '營區更新')
+          return Promise.all(deleteTypesPromise)
+        })
+        .then(res => {
+          console.log(res)
+          return Promise.all(createTemTypesPromise)
+        })
+        .then(res => {
+          console.log(res)
+          return this.$router.push('/admin/products')
+        })
     }
   }
 }

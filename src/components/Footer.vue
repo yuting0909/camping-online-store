@@ -5,9 +5,8 @@
         <img width="100" src="../assets/logo.png" alt="icamping" />
       </router-link>
       <br />
-      <span class="fs-8">地址：台中市北區北興街250號 / 聯絡我們：icamping@icamping.com.tw</span> <br />
-      <span class="fs-8 text-muted">Copyright 2021 ICAMPING. All RIGHTS RESERVED.</span>
-      <span class="fs-8 text-muted"> 僅做為個人學習使用，非商業用途</span>
+      <span class="fs-8 text-muted">Copyright 2021 ICAMPING. All RIGHTS RESERVED.</span> <br />
+      <span class="fs-8 text-muted"> 本網頁及營區預訂功能僅做為個人學習與蒐藏喜愛營地使用，無任何商業用途</span>
     </div>
   </footer>
 </template>

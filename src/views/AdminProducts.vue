@@ -21,20 +21,20 @@
   <table class="table mt-4">
     <thead>
       <tr>
-        <th width="80">地區</th>
-        <th width="80">縣市</th>
+        <th width="100">地區 / 縣市</th>
         <th width="120">營區名稱</th>
-        <th width="160">營區特色</th>
+        <th width="200" class="d-none d-sm-table-cell">營區特色</th>
         <th width="120">是否啟用</th>
         <th width="160">編輯</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="item in products" :key="item.id">
-        <td>{{ item.region }}</td>
-        <td>{{ item.city }}</td>
+        <td>{{ item.region }} / {{ item.city }}</td>
         <td>{{ item.title }}</td>
-        <td v-if="item.features">{{ item.features.join('、') }}</td>
+        <td v-if="item.features" class="d-none d-sm-table-cell">
+          {{ item.features.join('、') }}
+        </td>
         <td v-else>無</td>
         <td>
           <span class="text-success" v-if="item.is_enabled">啟用</span>
@@ -118,14 +118,16 @@ export default {
       const deleteTemTypesPromise = this.temTypes.map(type =>
         this.deletePromise(type)
       )
-      this.deletePromise(this.temProduct).then(res => {
-        console.log(res)
-        this.pushMessageState(res, '營區刪除')
-        return Promise.all(deleteTemTypesPromise)
-      }).then(res => {
-        console.log(res)
-        return this.getProducts()
-      })
+      this.deletePromise(this.temProduct)
+        .then(res => {
+          console.log(res)
+          this.pushMessageState(res, '營區刪除')
+          return Promise.all(deleteTemTypesPromise)
+        })
+        .then(res => {
+          console.log(res)
+          return this.getProducts()
+        })
     }
   }
 }

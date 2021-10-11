@@ -184,7 +184,7 @@
             </div>
           </div>
           <template v-if="showFavorite">
-            <div v-if="favorite.length" class="row">
+            <div v-if="favorite.length" class="row mb-3">
               <h3 class="fs-6 mb-3">搜尋結果：{{ favoriteNum }}個</h3>
               <div
                 class="col-sm-6 col-lg-6 col-xl-4 mb-3"
@@ -202,7 +202,7 @@
             </div>
           </template>
           <template v-else>
-            <div v-if="products.length" class="row">
+            <div v-if="products.length" class="row mb-3">
               <h3 class="fs-6 mb-3">搜尋結果：{{ productsNum }}個</h3>
               <div
                 class="col-sm-6 col-lg-6 col-xl-4 mb-3"
@@ -218,6 +218,7 @@
             <div v-else class="pt-3">
               <h3 class="fs-5 fw-bold">沒有符合條件的營地喔</h3>
             </div>
+            <Pagination :pages="pagination" @update-page="getProducts"></Pagination>
           </template>
         </div>
       </div>
@@ -252,9 +253,10 @@
 
 <script>
 import ProductCard from '@/components/ProductCard.vue'
+import Pagination from '@/components/Pagination.vue'
 
 export default {
-  components: { ProductCard },
+  components: { ProductCard, Pagination },
   data () {
     return {
       regions: ['北部', '中部', '南部', '東部', '離島'],
@@ -281,11 +283,11 @@ export default {
       productsNum: '',
       favoriteNum: '',
       isLoading: false,
-      pagenation: {
-        currentPage: 1,
+      pagination: {
+        current_page: 1,
         offset: 9,
-        totalPage: 0,
-        pageStart: 0
+        total_pages: 0,
+        page_start: 0
       }
     }
   },
@@ -301,7 +303,7 @@ export default {
     }
   },
   methods: {
-    getProducts () {
+    getProducts (page = 1) {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
       this.isLoading = true
       this.$http.get(url).then(res => {
@@ -310,14 +312,15 @@ export default {
         )
         this.getFavorite()
         this.filterProducts()
-        this.pagenation.pageStart =
-          (this.pagenation.currentPage - 1) * this.pagenation.offset
-        this.pagenation.totalPage = Math.ceil(
-          this.products.length / this.pagenation.offset
+        this.pagination.current_page = page
+        this.pagination.page_start =
+          (this.pagination.current_page - 1) * this.pagination.offset
+        this.pagination.total_pages = Math.ceil(
+          this.products.length / this.pagination.offset
         )
         this.products = this.products.slice(
-          this.pagenation.pageStart,
-          this.pagenation.pageStart + this.pagenation.offset
+          this.pagination.page_start,
+          this.pagination.page_start + this.pagination.offset
         )
         this.isLoading = false
       })

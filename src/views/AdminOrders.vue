@@ -83,7 +83,7 @@
 <script>
 import OrderModal from '../components/OrderModal.vue'
 import DeleteModal from '../components/DeleteModal.vue'
-import Pagination from '../components/Pagenation.vue'
+import Pagination from '../components/Pagination.vue'
 
 export default {
   data () {

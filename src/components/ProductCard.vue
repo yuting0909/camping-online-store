@@ -84,6 +84,7 @@ export default {
         list.push(this.product)
       }
       localStorage.setItem('favoriteProducts', JSON.stringify(list))
+      this.$emit('update-favorite')
     }
   },
   created () {

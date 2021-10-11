@@ -14,7 +14,7 @@
     </div>
   </Loading>
   <section class="products-section-2">
-    <div class="container pt-5">
+    <div class="container pt-3 pt-md-5">
       <div class="row">
         <div class="col-lg-4 col-xl-3 d-none d-lg-block">
           <div class="card rounded-4">
@@ -26,14 +26,14 @@
                 <template v-for="(region, i) in regions" :key="i">
                   <input
                     type="checkbox"
-                    class="btn-check btn-hover-white"
+                    class="btn-check"
                     :id="region"
                     :value="region"
                     autocomplete="off"
-                    v-model="filter.regions"
+                    v-model="filterRegions"
                   />
                   <label
-                    class="btn btn-outline-secondary rounded-pill fs-7 py-1 px-3 my-1 me-2"
+                    class="btn btn-outline-secondary btn-hover-white rounded-pill fs-7 py-1 px-3 my-1 me-2"
                     :for="region"
                     ># {{ region }}</label
                   >
@@ -44,14 +44,14 @@
                 <template v-for="(feature, i) in features" :key="i">
                   <input
                     type="checkbox"
-                    class="btn-check btn-hover-white"
+                    class="btn-check"
                     :id="feature"
                     :value="feature"
                     autocomplete="off"
-                    v-model="filter.features"
+                    v-model="filterFeatures"
                   />
                   <label
-                    class="btn btn-outline-secondary rounded-pill fs-7 py-1 px-3 my-1 me-2"
+                    class="btn btn-outline-secondary btn-hover-white rounded-pill fs-7 py-1 px-3 my-1 me-2"
                     :for="feature"
                     ># {{ feature }}</label
                   >
@@ -60,21 +60,195 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-8 col-xl-9">
-          <div class="row">
-            <div
-              class="col-sm-6 col-md-4 col-lg-6 col-xl-4 mb-3"
-              v-for="(item, i) in products"
-              :key="i"
-            >
-              <product-card :product="item"></product-card>
+        <div class="col d-lg-none">
+          <div class="row g-2">
+            <div class="col-6">
+              <button
+                class="btn btn-primary w-100 w-sm-fit"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#categoryFilter"
+                aria-expanded="false"
+                aria-controls="categoryFilter"
+              >
+                條件篩選<i class="bi bi-search ms-2"></i>
+              </button>
+            </div>
+            <div class="col-6 d-sm-none">
+              <button
+                v-if="!showFavorite"
+                class="btn btn-outline-warning btn-hover-white w-100"
+                @click="favoriteHandler()"
+              >
+                收藏的營地
+              </button>
+              <button
+                v-else
+                class="btn btn-outline-success btn-hover-white w-100"
+                @click="favoriteHandler()"
+              >
+                查看所有營地
+              </button>
             </div>
           </div>
+          <div class="mb-3">
+            <div class="collapse mt-3" id="categoryFilter">
+              <div class="card bg-light p-2 rounded-0 border-0">
+                <div class="row g-1 regions mb-2">
+                  <div class="d-none d-sm-block col-sm-2 pt-2">
+                    <h2 class="fs-7">
+                      目的地 <i class="bi bi-caret-right-fill"></i>
+                    </h2>
+                  </div>
+                  <div class="col region-tags">
+                    <template v-for="(region, i) in regions" :key="i">
+                      <input
+                        type="checkbox"
+                        class="btn-check"
+                        :id="region"
+                        :value="region"
+                        autocomplete="off"
+                        v-model="filterRegions"
+                      />
+                      <label
+                        class="btn btn-outline-secondary btn-hover-white rounded-pill fs-7 py-1 px-3 my-1 me-2"
+                        :for="region"
+                        ># {{ region }}</label
+                      >
+                    </template>
+                  </div>
+                </div>
+                <div class="row g-1 features">
+                  <div class="d-none d-sm-block col-sm-2 pt-2">
+                    <h2 class="fs-7">
+                      營區特色 <i class="bi bi-caret-right-fill"></i>
+                    </h2>
+                  </div>
+                  <div class="col region-tags">
+                    <template v-for="(feature, i) in features" :key="i">
+                      <input
+                        type="checkbox"
+                        class="btn-check"
+                        :id="feature"
+                        :value="feature"
+                        autocomplete="off"
+                        v-model="filterFeatures"
+                      />
+                      <label
+                        class="btn btn-outline-secondary btn-hover-white rounded-pill fs-7 py-1 px-3 my-1 me-2"
+                        :for="feature"
+                        ># {{ feature }}</label
+                      >
+                    </template>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8 col-xl-9">
+          <div v-if="!showFavorite" class="row g-2 mb-3">
+            <div class="col">
+              <form>
+                <div class="input-group">
+                  <span class="input-group-text bg-primary text-light"
+                    >搜尋營區</span
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="請輸入營區名稱"
+                    v-model="keyword"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="col-2 col-sm-4 col-md-3 d-none d-sm-block">
+              <button
+                class="btn btn-outline-warning btn-hover-white w-100"
+                @click="favoriteHandler()"
+              >
+                <i class="bi bi-suit-heart-fill me-2"></i>收藏的營地
+              </button>
+            </div>
+          </div>
+          <div v-else class="row g-2 mb-3">
+            <div class="col d-flex align-items-center">
+              <h2 class="fs-4 fw-bold m-0 me-3">收藏的營地</h2>
+              <button
+                class="btn btn-outline-success btn-hover-white d-none d-sm-block"
+                @click="favoriteHandler()"
+              >
+                查看所有營地
+              </button>
+            </div>
+          </div>
+          <template v-if="showFavorite">
+            <div v-if="favorite.length" class="row">
+              <h3 class="fs-6 mb-3">搜尋結果：{{ favoriteNum }}個</h3>
+              <div
+                class="col-sm-6 col-lg-6 col-xl-4 mb-3"
+                v-for="(item, i) in favorite"
+                :key="i"
+              >
+                <product-card
+                  :product="item"
+                  @update-favorite="getProducts"
+                ></product-card>
+              </div>
+            </div>
+            <div v-else class="pt-3">
+              <h3 class="fs-5 fw-bold">目前沒有收藏的營地喔</h3>
+            </div>
+          </template>
+          <template v-else>
+            <div v-if="products.length" class="row">
+              <h3 class="fs-6 mb-3">搜尋結果：{{ productsNum }}個</h3>
+              <div
+                class="col-sm-6 col-lg-6 col-xl-4 mb-3"
+                v-for="(item, i) in products"
+                :key="i"
+              >
+                <product-card
+                  :product="item"
+                  @update-favorite="getProducts"
+                ></product-card>
+              </div>
+            </div>
+            <div v-else class="pt-3">
+              <h3 class="fs-5 fw-bold">沒有符合條件的營地喔</h3>
+            </div>
+          </template>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<style lang="scss">
+@import '~bootstrap/scss/functions';
+@import '../style/custom/_variables';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/utilities';
+
+.btn-check:checked + .btn-outline-secondary,
+.btn-check:active + .btn-outline-secondary,
+.btn-outline-secondary:active,
+.btn-outline-secondary.active,
+.btn-outline-secondary.dropdown-toggle.show {
+  color: $white;
+}
+
+.btn-hover-white {
+  &:hover {
+    color: $white;
+  }
+  &.active {
+    color: $white;
+  }
+}
+</style>
 
 <script>
 import ProductCard from '@/components/ProductCard.vue'
@@ -98,12 +272,32 @@ export default {
         '夜景',
         '雲海'
       ],
-      filter: {
-        regions: [],
-        features: []
-      },
+      keyword: '',
+      filterRegions: [],
+      filterFeatures: [],
+      showFavorite: false,
+      favorite: [],
       products: [],
-      isLoading: false
+      productsNum: '',
+      favoriteNum: '',
+      isLoading: false,
+      pagenation: {
+        currentPage: 1,
+        offset: 9,
+        totalPage: 0,
+        pageStart: 0
+      }
+    }
+  },
+  watch: {
+    keyword () {
+      this.getProducts()
+    },
+    filterRegions () {
+      this.getProducts()
+    },
+    filterFeatures () {
+      this.getProducts()
     }
   },
   methods: {
@@ -114,9 +308,84 @@ export default {
         this.products = res.data.products.filter(
           product => product.category === '露營區'
         )
-        console.log('products:', this.products)
+        this.getFavorite()
+        this.filterProducts()
+        this.pagenation.pageStart =
+          (this.pagenation.currentPage - 1) * this.pagenation.offset
+        this.pagenation.totalPage = Math.ceil(
+          this.products.length / this.pagenation.offset
+        )
+        this.products = this.products.slice(
+          this.pagenation.pageStart,
+          this.pagenation.pageStart + this.pagenation.offset
+        )
         this.isLoading = false
       })
+    },
+    getFavorite () {
+      this.favorite = JSON.parse(localStorage.getItem('favoriteProducts')) || []
+      this.filterFavorite()
+    },
+    favoriteHandler () {
+      this.showFavorite = !this.showFavorite
+    },
+    filterProducts () {
+      // filter products by regions
+      if (this.filterRegions.length) {
+        const filterProducts = []
+        this.filterRegions.forEach(region => {
+          this.products.forEach(product => {
+            if (product.region === region) {
+              filterProducts.push(product)
+            }
+          })
+        })
+        this.products = filterProducts
+      }
+      // filter products by features
+      if (this.filterFeatures.length) {
+        this.filterFeatures.forEach(feature => {
+          this.products = this.products.filter(product =>
+            product.features.includes(feature)
+          )
+        })
+      }
+      // filter products by keyword
+      if (this.keyword) {
+        this.products = this.products.filter(product =>
+          product.title.match(this.keyword)
+        )
+      }
+      this.productsNum = this.products.length
+    },
+    filterFavorite () {
+      // filter products by regions
+      if (this.filterRegions.length) {
+        const filterFavorite = []
+        this.filterRegions.forEach(region => {
+          this.favorite.forEach(product => {
+            if (product.region === region) {
+              filterFavorite.push(product)
+            }
+          })
+        })
+        this.favorite = filterFavorite
+      }
+      // filter products by features
+      if (this.filterFeatures.length) {
+        this.filterFeatures.forEach(feature => {
+          this.favorite = this.favorite.filter(product =>
+            product.features.includes(feature)
+          )
+        })
+      }
+      // filter products by keyword
+      if (this.keyword) {
+        this.favorite = this.favorite.filter(product =>
+          product.title.match(this.keyword)
+        )
+      }
+      this.favoriteNum = this.favorite.length
     }
   },
   created () {

@@ -44,25 +44,27 @@
       <div class="col">
         <div class="container-fluid">
           <ul class="navbar-nav">
-            <li class="nav-item px-lg-3">
-              <router-link to="/about" class="nav-link"
+            <li class="nav-item">
+              <router-link to="/" class="nav-link text-center"
+                >首頁 HOME</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link to="/about" class="nav-link text-center"
                 >品牌故事 STORY</router-link
               >
             </li>
-            <li class="nav-item px-lg-3">
-              <router-link to="/products" class="nav-link"
+            <li class="nav-item">
+              <router-link to="/products" class="nav-link text-center"
                 >找營區 CAMPSITE</router-link
               >
             </li>
-            <li class="nav-item px-lg-3">
-              <router-link to="/login" class="nav-link">登入 LOGIN</router-link>
-            </li>
-            <li v-if="cart" class="nav-item px-lg-3 my-auto d-none d-md-block">
+            <li class="nav-item py-2 mx-auto d-flex">
               <router-link
-                to="/cart"
-                class="btn btn-warning text-light rounded-pill nav-link py-1 px-3"
-                ><i class="bi bi-bag me-2"></i>
-                <small> {{ cart.length }} 件商品</small>
+                to="/admin/products"
+                class="btn btn-light text-primary rounded-pill nav-link py-1 px-3 me-2"
+                ><i class="bi bi-person-circle me-2"></i>
+                <small>登入</small>
               </router-link>
             </li>
           </ul>
@@ -79,30 +81,33 @@
         <div class="container-fluid">
           <div class="collapse navbar-collapse justify-content-center">
             <ul class="navbar-nav">
-              <li class="nav-item px-lg-3">
+              <li class="nav-item mx-2">
+                <router-link to="/" class="nav-link">首頁 HOME</router-link>
+              </li>
+              <li class="nav-item mx-2">
                 <router-link to="/about" class="nav-link"
                   >品牌故事 STORY</router-link
                 >
               </li>
-              <li class="nav-item px-lg-3">
+              <li class="nav-item mx-2">
                 <router-link to="/products" class="nav-link"
                   >找營區 CAMPSITE</router-link
                 >
               </li>
-              <li class="nav-item px-lg-3">
-                <router-link to="/login" class="nav-link"
-                  >登入 LOGIN</router-link
-                >
-              </li>
-              <li
-                v-if="cart"
-                class="nav-item px-lg-3 my-auto d-none d-md-block"
-              >
+              <li v-if="cart" class="nav-item mx-2 my-auto">
                 <router-link
                   to="/cart"
                   class="btn btn-warning text-light rounded-pill nav-link py-1 px-3"
                   ><i class="bi bi-bag me-2"></i>
                   <small> {{ cart.length }} 件商品</small>
+                </router-link>
+              </li>
+              <li class="nav-item mx-2 my-auto d-flex">
+                <router-link
+                  to="/admin/products"
+                  class="btn btn-light text-primary rounded-pill nav-link py-1 px-3 me-2"
+                  ><i class="bi bi-person-circle me-2"></i>
+                  <small>登入</small>
                 </router-link>
               </li>
             </ul>

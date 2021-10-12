@@ -107,7 +107,6 @@
 </style>
 
 <script>
-import emitter from '../methods/emitter'
 
 export default {
   data () {
@@ -125,6 +124,7 @@ export default {
       }, {})
     }
   },
+  inject: ['emitter'],
   methods: {
     stringToArray (str) {
       return str.split('\n')
@@ -148,9 +148,14 @@ export default {
       })
     },
     sendCart () {
-      emitter.emit('sendCart', this.cart)
+      this.emitter.emit('sendCart', this.cart)
       console.log('sendCart')
     }
+  },
+  mounted () {
+    this.emitter.on('scrollToChooseType', () => {
+      document.querySelector('#choose-type').scrollIntoView(false)
+    })
   }
 }
 </script>

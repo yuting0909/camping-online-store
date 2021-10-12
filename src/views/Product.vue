@@ -22,11 +22,17 @@
 <script>
 import ProductSection1 from '@/components/ProductSection1.vue'
 import ProductSection2 from '@/components/ProductSection2.vue'
+import emitter from '../methods/emitter'
 
 export default {
   components: {
     ProductSection1,
     ProductSection2
+  },
+  provide () {
+    return {
+      emitter
+    }
   },
   data () {
     return {

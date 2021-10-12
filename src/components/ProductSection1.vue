@@ -93,6 +93,7 @@
                 <div class="col-sm-6 d-grid">
                   <button
                     class="btn btn-outline-secondary btn-hover-white rounded-pill"
+                    @click="scrollToChooseType"
                   >
                     選擇營地
                   </button>
@@ -174,6 +175,7 @@ export default {
       }
     }
   },
+  inject: ['emitter'],
   methods: {
     defineIsFavorite () {
       const list = JSON.parse(localStorage.getItem('favoriteProducts')) || []
@@ -195,6 +197,9 @@ export default {
     },
     setIndex (index) {
       this.index = index
+    },
+    scrollToChooseType () {
+      this.emitter.emit('scrollToChooseType')
     }
   },
   created () {

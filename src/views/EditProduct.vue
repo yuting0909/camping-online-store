@@ -369,14 +369,11 @@ export default {
   },
   methods: {
     getProduct () {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`
       this.isLoading = true
       this.$http.get(api).then(res => {
         this.isLoading = false
-        console.log(res.data)
-        const product = res.data.products.find(
-          product => product.id === this.id
-        )
+        const product = res.data.products[this.id]
         this.temProduct = product.features
           ? product
           : { ...product, features: [] }
@@ -384,12 +381,13 @@ export default {
       })
     },
     getTypes () {
-      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`
       this.$http.get(api).then(res => {
-        this.types = res.data.products.filter(
+        const productsArr = Object.values(res.data.products)
+        this.types = productsArr.filter(
           product => product.belong_to === this.temProduct.title
         )
-        this.temTypes = res.data.products.filter(
+        this.temTypes = productsArr.filter(
           product => product.belong_to === this.temProduct.title
         )
       })

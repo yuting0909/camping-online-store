@@ -215,7 +215,6 @@
 </style>
 
 <script>
-import emitter from '../methods/emitter'
 
 export default {
   data () {
@@ -225,14 +224,24 @@ export default {
       isLoading: false
     }
   },
+  inject: ['emitter'],
   methods: {
-    getCarts () {
+    getCarts (mode) {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       this.isLoading = true
       this.$http.get(url).then(res => {
         this.isLoading = false
         this.cart = res.data.data
         this.sendCart()
+        if (mode === 'update') {
+          this.emitter.emit('send-message', '更新購物車成功!')
+        }
+        if (mode === 'delete') {
+          this.emitter.emit('send-message', '已從購物車中移除!')
+        }
+        if (mode === 'addCoupon') {
+          this.emitter.emit('send-message', '套用優惠券!')
+        }
       })
     },
     increaseQty (item) {
@@ -253,18 +262,18 @@ export default {
       }
       this.$http.put(url, { data: cart }).then(res => {
         console.log(res)
-        this.getCarts()
+        this.getCarts('update')
       })
     },
     removeCartItem (item) {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
       this.$http.delete(url).then(res => {
         console.log(res)
-        this.getCarts()
+        this.getCarts('delete')
       })
     },
     sendCart () {
-      emitter.emit('sendCart', this.cart.carts)
+      this.emitter.emit('sendCart', this.cart.carts)
       console.log('sendCart')
     },
     addCouponCode () {
@@ -274,7 +283,7 @@ export default {
       }
       this.isLoading = true
       this.$http.post(url, { data: coupon }).then(res => {
-        this.getCarts()
+        this.getCarts('addCoupon')
         console.log(res)
       })
     }

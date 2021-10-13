@@ -84,10 +84,10 @@ export default {
         list.push(this.product)
       }
       localStorage.setItem('favoriteProducts', JSON.stringify(list))
-      this.$emit('update-favorite')
+      this.$emit('update-favorite', this.isFavorite)
     }
   },
-  created () {
+  mounted () {
     const list = JSON.parse(localStorage.getItem('favoriteProducts')) || []
     if (list.length) {
       this.isFavorite = list.some(product => product.id === this.product.id)

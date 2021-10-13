@@ -193,7 +193,7 @@
               >
                 <product-card
                   :product="item"
-                  @update-favorite="getProducts"
+                  @update-favorite="updateFavorite"
                 ></product-card>
               </div>
             </div>
@@ -211,7 +211,7 @@
               >
                 <product-card
                   :product="item"
-                  @update-favorite="getProducts"
+                  @update-favorite="updateFavorite"
                 ></product-card>
               </div>
             </div>
@@ -302,6 +302,7 @@ export default {
       this.getProducts()
     }
   },
+  inject: ['emitter'],
   methods: {
     getProducts (page = 1) {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`
@@ -328,6 +329,16 @@ export default {
     getFavorite () {
       this.favorite = JSON.parse(localStorage.getItem('favoriteProducts')) || []
       this.filterFavorite()
+      this.favoriteNum = this.favorite.length
+    },
+    updateFavorite (isFavorite) {
+      this.favorite = JSON.parse(localStorage.getItem('favoriteProducts')) || []
+      this.favoriteNum = this.favorite.length
+      if (isFavorite) {
+        this.emitter.emit('send-message', '已加入收藏!')
+      } else {
+        this.emitter.emit('send-message', '已從收藏中移除!')
+      }
     },
     favoriteHandler () {
       this.showFavorite = !this.showFavorite
@@ -388,7 +399,6 @@ export default {
           product.title.match(this.keyword)
         )
       }
-      this.favoriteNum = this.favorite.length
     }
   },
   created () {

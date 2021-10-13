@@ -1,5 +1,19 @@
 <template>
   <div class="product-section-2">
+    <Loading :active="isLoading">
+      <div class="loadingio-spinner-spin-xmpavumjb">
+        <div class="ldio-ylwm2fadiqf">
+          <div><div></div></div>
+          <div><div></div></div>
+          <div><div></div></div>
+          <div><div></div></div>
+          <div><div></div></div>
+          <div><div></div></div>
+          <div><div></div></div>
+          <div><div></div></div>
+        </div>
+      </div>
+    </Loading>
     <div class="container py-5 px-4">
       <div class="row mb-5">
         <div class="col-lg-2">
@@ -52,6 +66,7 @@
                       <div class="col-md-6 mb-2">
                         <input
                           type="number"
+                          min="1"
                           class="form-control"
                           placeholder="請輸入數量"
                           v-model="typeNum[type.id]"
@@ -107,12 +122,12 @@
 </style>
 
 <script>
-
 export default {
   data () {
     return {
       typeNum: {},
-      cart: []
+      cart: [],
+      isLoading: false
     }
   },
   props: ['product', 'types'],
@@ -130,6 +145,7 @@ export default {
       return str.split('\n')
     },
     addToCart (id) {
+      this.isLoading = true
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       const cart = {
         product_id: id,
@@ -138,6 +154,8 @@ export default {
       this.$http.post(url, { data: cart }).then(res => {
         console.log(res)
         this.getCart()
+        this.isLoading = false
+        this.emitter.emit('send-message', '成功加入購物車!')
       })
     },
     getCart () {
@@ -149,7 +167,6 @@ export default {
     },
     sendCart () {
       this.emitter.emit('sendCart', this.cart)
-      console.log('sendCart')
     }
   },
   mounted () {

@@ -128,7 +128,7 @@
 }
 header,
 #headerNavbar {
-  z-index: 999;
+  z-index: 100;
 }
 </style>
 

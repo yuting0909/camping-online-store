@@ -392,6 +392,12 @@ export default {
     }
   },
   created () {
+    if (this.$route.query.feature) {
+      this.filterFeatures.push(this.$route.query.feature)
+    }
+    if (this.$route.query.region) {
+      this.filterRegions.push(this.$route.query.region)
+    }
     this.getProducts()
   }
 }

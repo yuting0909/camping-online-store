@@ -17,7 +17,6 @@
           <div class="slide-caption py-3 px-5">
             <h1>{{ carousel.title }}</h1>
             <p class="text-center">{{ carousel.text }}</p>
-            <a href="" class="btn btn-outline-light rounded-0 px-4">查看更多</a>
           </div>
         </div>
       </div>

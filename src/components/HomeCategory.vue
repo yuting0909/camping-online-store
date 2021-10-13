@@ -15,7 +15,7 @@
             :key="i"
           >
             <a
-              href="#"
+              :href="`#/products?feature=${theme.feature}`"
               class="theme d-block text-center overflow-hidden position-relative"
             >
               <img
@@ -42,7 +42,7 @@
         <div class="row g-4">
           <div class="col-6 col-lg-3" v-for="(region, i) in regions" :key="i">
             <a
-              href="#"
+              :href="`#/products?region=${region.region}`"
               class="region d-block text-center overflow-hidden position-relative"
             >
               <img
@@ -81,7 +81,6 @@
     transform: scale(1);
   }
   &:hover h3 {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
   img {
@@ -120,10 +119,9 @@
     }
   }
   h3 {
-    opacity: 0;
     padding-top: 27%;
     transform: translate3d(0, -20px, 0);
-    transition: opacity 0.35s, transform 0.35s;
+    transition: transform 0.35s;
   }
 }
 .region {
@@ -189,18 +187,18 @@ export default {
   data () {
     return {
       themeList: [
-        { title: '森林系', imgUrl: '/images/home/home-theme-01.jpg' },
-        { title: '觀夜景', imgUrl: '/images/home/home-theme-02.jpg' },
-        { title: '賞雲海', imgUrl: '/images/home/home-theme-03.jpg' },
-        { title: '親子遊樂', imgUrl: '/images/home/home-theme-04.jpg' },
-        { title: '免裝備', imgUrl: '/images/home/home-theme-05.jpg' },
-        { title: '新手露營', imgUrl: '/images/home/home-theme-06.jpg' }
+        { title: '森林系', imgUrl: '/images/home/home-theme-01.jpg', feature: '森林' },
+        { title: '觀夜景', imgUrl: '/images/home/home-theme-02.jpg', feature: '夜景' },
+        { title: '賞雲海', imgUrl: '/images/home/home-theme-03.jpg', feature: '雲海' },
+        { title: '親子遊樂', imgUrl: '/images/home/home-theme-04.jpg', feature: '遊樂設施' },
+        { title: '免裝備', imgUrl: '/images/home/home-theme-05.jpg', feature: '免裝備' },
+        { title: '新手露營', imgUrl: '/images/home/home-theme-06.jpg', feature: '裝備租借' }
       ],
       regions: [
-        { title: '北部', imgUrl: '/images/home/home-region-01.jpg' },
-        { title: '中部', imgUrl: '/images/home/home-region-02.jpg' },
-        { title: '南部', imgUrl: '/images/home/home-region-03.jpg' },
-        { title: '東部', imgUrl: '/images/home/home-region-04.jpg' }
+        { title: '北部', imgUrl: '/images/home/home-region-01.jpg', region: '北部' },
+        { title: '中部', imgUrl: '/images/home/home-region-02.jpg', region: '中部' },
+        { title: '南部', imgUrl: '/images/home/home-region-03.jpg', region: '南部' },
+        { title: '東部', imgUrl: '/images/home/home-region-04.jpg', region: '東部' }
       ]
     }
   }

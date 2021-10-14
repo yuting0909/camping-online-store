@@ -194,6 +194,17 @@ export default {
         list.push(this.product)
       }
       localStorage.setItem('favoriteProducts', JSON.stringify(list))
+      if (this.isFavorite) {
+        this.emitter.emit('send-message', {
+          success: true,
+          content: '已加入收藏!'
+        })
+      } else {
+        this.emitter.emit('send-message', {
+          success: false,
+          content: '已從收藏中移除!'
+        })
+      }
     },
     setIndex (index) {
       this.index = index

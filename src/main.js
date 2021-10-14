@@ -12,7 +12,7 @@ import router from './router'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
-import { currency, date } from './methods/filters'
+import { currency, date, stringToArray } from './methods/filters'
 
 import '@/style/all.scss'
 
@@ -27,7 +27,7 @@ configure({
 setLocale('zh_TW')
 
 const app = createApp(App)
-app.config.globalProperties.$filters = { currency, date }
+app.config.globalProperties.$filters = { currency, date, stringToArray }
 app.use(VueAxios, axios)
 app.use(router)
 app.component('Loading', Loading)

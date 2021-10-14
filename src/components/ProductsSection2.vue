@@ -218,7 +218,10 @@
             <div v-else class="pt-3">
               <h3 class="fs-5 fw-bold">沒有符合條件的營地喔</h3>
             </div>
-            <Pagination :pages="pagination" @update-page="getProducts"></Pagination>
+            <Pagination
+              :pages="pagination"
+              @update-page="getProducts"
+            ></Pagination>
           </template>
         </div>
       </div>
@@ -335,9 +338,15 @@ export default {
       this.favorite = JSON.parse(localStorage.getItem('favoriteProducts')) || []
       this.favoriteNum = this.favorite.length
       if (isFavorite) {
-        this.emitter.emit('send-message', '已加入收藏!')
+        this.emitter.emit('send-message', {
+          success: true,
+          content: '已加入收藏!'
+        })
       } else {
-        this.emitter.emit('send-message', '已從收藏中移除!')
+        this.emitter.emit('send-message', {
+          success: false,
+          content: '已從收藏中移除!'
+        })
       }
     },
     favoriteHandler () {

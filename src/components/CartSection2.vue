@@ -201,7 +201,9 @@
     </div>
     <div v-else class="container py-5">
       <h2 class="fw-bold mb-3">目前還沒有加入商品喔</h2>
-      <a href="#/products" class="btn btn-primary">尋找喜歡的露營區 <i class="bi bi-caret-right-fill"></i></a>
+      <a href="#/products" class="btn btn-primary"
+        >尋找喜歡的露營區 <i class="bi bi-caret-right-fill"></i
+      ></a>
     </div>
   </section>
 </template>
@@ -215,7 +217,6 @@
 </style>
 
 <script>
-
 export default {
   data () {
     return {
@@ -234,13 +235,22 @@ export default {
         this.cart = res.data.data
         this.sendCart()
         if (mode === 'update') {
-          this.emitter.emit('send-message', '更新購物車成功!')
+          this.emitter.emit('send-message', {
+            success: true,
+            content: '更新購物車成功!'
+          })
         }
         if (mode === 'delete') {
-          this.emitter.emit('send-message', '已從購物車中移除!')
+          this.emitter.emit('send-message', {
+            success: true,
+            content: '已從購物車中移除!'
+          })
         }
         if (mode === 'addCoupon') {
-          this.emitter.emit('send-message', '套用優惠券!')
+          this.emitter.emit('send-message', {
+            success: true,
+            content: '套用優惠券!'
+          })
         }
       })
     },

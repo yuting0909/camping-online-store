@@ -5,11 +5,7 @@
       <p>
         歡迎訂閱 icamping 電子報，我們將不定期寄發給您最新的優惠與活動訊息。
       </p>
-      <Form
-        @submit="subscribe"
-        v-slot="{ errors }"
-        class="w-70 w-lg-50"
-      >
+      <Form @submit="subscribe" v-slot="{ errors }" class="w-70 w-lg-50">
         <div class="row mb-3">
           <div class="col-8">
             <Field
@@ -61,7 +57,10 @@ export default {
   inject: ['emitter'],
   methods: {
     subscribe () {
-      this.emitter.emit('send-message', '成功訂閱電子報!')
+      this.emitter.emit('send-message', {
+        success: true,
+        content: '成功訂閱電子報!'
+      })
     }
   }
 }

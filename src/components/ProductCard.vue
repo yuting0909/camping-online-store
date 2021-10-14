@@ -92,6 +92,12 @@ export default {
     if (list.length) {
       this.isFavorite = list.some(product => product.id === this.product.id)
     }
+  },
+  updated () {
+    const list = JSON.parse(localStorage.getItem('favoriteProducts')) || []
+    if (list.length) {
+      this.isFavorite = list.some(product => product.id === this.product.id)
+    }
   }
 }
 </script>

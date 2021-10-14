@@ -18,47 +18,50 @@
       >建立營區</router-link
     >
   </div>
-  <table class="table mt-4">
-    <thead>
-      <tr>
-        <th width="100">地區 / 縣市</th>
-        <th width="120">營區名稱</th>
-        <th width="200" class="d-none d-sm-table-cell">營區特色</th>
-        <th width="120">是否啟用</th>
-        <th width="160">編輯</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="item in products" :key="item.id">
-        <td>{{ item.region }} / {{ item.city }}</td>
-        <td>{{ item.title }}</td>
-        <td v-if="item.features" class="d-none d-sm-table-cell">
-          {{ item.features.join('、') }}
-        </td>
-        <td v-else>無</td>
-        <td>
-          <span class="text-success" v-if="item.is_enabled">啟用</span>
-          <span class="text-muted" v-else>未啟用</span>
-        </td>
-        <td>
-          <div class="btn-group">
-            <button
-              class="btn btn-outline-primary btn-sm"
-              @click="getProduct(item.id)"
-            >
-              編輯
-            </button>
-            <button
-              class="btn btn-outline-danger btn-sm"
-              @click="openDelModal(item)"
-            >
-              刪除
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table mt-4">
+      <thead>
+        <tr>
+          <th width="100">地區 / 縣市</th>
+          <th width="120">營區名稱</th>
+          <th width="200" class="d-none d-sm-table-cell">營區特色</th>
+          <th width="120">是否啟用</th>
+          <th width="160">編輯</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in products" :key="item.id">
+          <td>{{ item.region }} / {{ item.city }}</td>
+          <td>{{ item.title }}</td>
+          <td v-if="item.features" class="d-none d-sm-table-cell">
+            {{ item.features.join('、') }}
+          </td>
+          <td v-else>無</td>
+          <td>
+            <span class="text-success" v-if="item.is_enabled">啟用</span>
+            <span class="text-muted" v-else>未啟用</span>
+          </td>
+          <td>
+            <div class="btn-group">
+              <button
+                class="btn btn-outline-primary btn-sm"
+                @click="getProduct(item.id)"
+              >
+                編輯
+              </button>
+              <button
+                class="btn btn-outline-danger btn-sm"
+                @click="openDelModal(item)"
+              >
+                刪除
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <Pagination :pages="pagination" @update-page="getProducts"></Pagination>
   <delete-modal
     :item="temProduct"
     ref="deleteModal"
@@ -69,6 +72,7 @@
 <script>
 import DeleteModal from '../components/DeleteModal.vue'
 import promiseMixin from '../mixins/promiseMixin'
+import Pagination from '@/components/Pagination.vue'
 
 export default {
   data () {
@@ -77,23 +81,27 @@ export default {
       types: [],
       temProduct: {},
       temTypes: [],
-      isLoading: false
+      isLoading: false,
+      pagination: {
+        current_page: 1,
+        offset: 10,
+        total_pages: 0,
+        page_start: 0
+      }
     }
   },
   inject: ['pushMessageState'],
-  components: { DeleteModal },
+  components: { DeleteModal, Pagination },
   created () {
     this.getProducts()
     console.log('這是首頁')
   },
   mixins: [promiseMixin],
   methods: {
-    getProducts () {
+    getProducts (page = 1) {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/all`
       this.isLoading = true
       this.$http.get(api).then(res => {
-        this.isLoading = false
-        console.log(res.data)
         if (res.data.success) {
           this.products = Object.values(res.data.products).filter(
             product => product.category === '露營區'
@@ -102,6 +110,17 @@ export default {
             product => product.category === '營地種類'
           )
         }
+        this.pagination.current_page = page
+        this.pagination.page_start =
+          (this.pagination.current_page - 1) * this.pagination.offset
+        this.pagination.total_pages = Math.ceil(
+          this.products.length / this.pagination.offset
+        )
+        this.products = this.products.slice(
+          this.pagination.page_start,
+          this.pagination.page_start + this.pagination.offset
+        )
+        this.isLoading = false
       })
     },
     getProduct (id) {

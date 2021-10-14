@@ -13,64 +13,66 @@
       </div>
     </div>
   </Loading>
-  <table class="table mt-4">
-    <thead>
-      <tr>
-        <th width="120">購買時間</th>
-        <th width="160">Email</th>
-        <th width="200">購買款項</th>
-        <th width="100">應付金額</th>
-        <th width="100">是否付款</th>
-        <th width="160">編輯</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="order in orders" :key="order.id">
-        <td>{{ $filters.date(order.create_at) }}</td>
-        <td v-if="order.user">{{ order.user.email }}</td>
-        <td>
-          <ul class="list-unstyled">
-            <li v-for="(product, i) in order.products" :key="i">
-              {{ product.product.title }}：{{ product.qty }}
-              {{ product.product.unit }}, 小計 {{ product.final_total }} 元
-            </li>
-          </ul>
-        </td>
-        <td class="text-right">{{ order.total }}</td>
-        <td>
-          <div class="form-check form-switch">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              :id="`paidSwitch${order.id}`"
-              v-model="order.is_paid"
-              @change="updatePaid(order)"
-            />
-            <label :for="`paidSwitch${order.id}`">
-              <span v-if="order.is_paid">已付款</span>
-              <span v-else>未付款</span>
-            </label>
-          </div>
-        </td>
-        <td>
-          <div class="btn-group">
-            <button
-              class="btn btn-outline-primary btn-sm"
-              @click="openModal(order)"
-            >
-              檢視
-            </button>
-            <button
-              class="btn btn-outline-danger btn-sm"
-              @click="openDelModal(order)"
-            >
-              刪除
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table mt-4">
+      <thead>
+        <tr>
+          <th width="100">購買時間</th>
+          <th width="120">Email</th>
+          <th width="200" class="d-none d-sm-table-cell">購買款項</th>
+          <th width="100" class="d-none d-sm-table-cell">應付金額</th>
+          <th width="100" class="d-none d-sm-table-cell">是否付款</th>
+          <th width="200">編輯</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="order in orders" :key="order.id">
+          <td>{{ $filters.date(order.create_at) }}</td>
+          <td v-if="order.user">{{ order.user.email }}</td>
+          <td class="d-none d-sm-table-cell">
+            <ul class="list-unstyled">
+              <li v-for="(product, i) in order.products" :key="i">
+                {{ product.product.title }}：{{ product.qty }}
+                {{ product.product.unit }}, 小計 {{ product.final_total }} 元
+              </li>
+            </ul>
+          </td>
+          <td class="text-right d-none d-sm-table-cell">{{ order.total }}</td>
+          <td class="d-none d-sm-table-cell">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                :id="`paidSwitch${order.id}`"
+                v-model="order.is_paid"
+                @change="updatePaid(order)"
+              />
+              <label :for="`paidSwitch${order.id}`">
+                <span v-if="order.is_paid">已付款</span>
+                <span v-else>未付款</span>
+              </label>
+            </div>
+          </td>
+          <td>
+            <div class="btn-group">
+              <button
+                class="btn btn-outline-primary btn-sm"
+                @click="openModal(order)"
+              >
+                檢視
+              </button>
+              <button
+                class="btn btn-outline-danger btn-sm"
+                @click="openDelModal(order)"
+              >
+                刪除
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <order-modal :order="temOrder" ref="orderModal"></order-modal>
   <delete-modal
     :item="temOrder"

@@ -41,29 +41,45 @@
               class="card rounded-3 overflow-hidden mb-3 border-0 bg-light"
             >
               <div class="row g-0">
-                <div class="col-sm-5">
+                <div class="col-md-5">
                   <img class="type-pic" :src="type.images[0]" alt="營地圖片" />
                 </div>
-                <div class="col-sm-7">
+                <div class="col-md-7">
                   <div class="card-body h-100 d-flex flex-column">
                     <h3
                       class="fs-5 mb-0 d-flex justify-content-between flex-wrap"
                     >
                       <span class="fw-bold mb-2">{{ type.title }}</span
                       ><span class="float-end fs-6 mb-2"
-                        >NT {{ type.price }} / {{ type.unit }}</span
+                        >NT {{ $filters.currency(type.price) }} /
+                        {{ type.unit }}</span
                       >
                     </h3>
                     <ul class="list-unstyled text-muted mb-3">
                       <li
-                        v-for="(content, i) in stringToArray(type.content)"
+                        v-for="(content, i) in $filters.stringToArray(
+                          type.content
+                        )"
                         :key="i"
+                        v-show="i < 3"
                       >
                         <i class="bi bi-check-lg me-2"></i>{{ content }}
                       </li>
                     </ul>
-                    <div class="row mt-auto">
-                      <div class="col-md-6 mb-2">
+                    <a
+                      v-if="$filters.stringToArray(type.content).length > 3"
+                      href="#"
+                      class="text-decoration-none text-secondary fs-7"
+                      @click.prevent="openContentModal(type)"
+                      ><i class="bi bi-exclamation-circle me-2"></i
+                      >查看更多說明</a
+                    >
+                    <content-modal
+                      ref="contentModal"
+                      :type="tempType"
+                    ></content-modal>
+                    <div class="row g-2 mt-auto">
+                      <div class="col-6 mb-2">
                         <input
                           type="number"
                           min="1"
@@ -72,7 +88,7 @@
                           v-model="typeNum[type.id]"
                         />
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-6">
                         <button
                           class="btn btn-primary w-100"
                           @click="addToCart(type.id)"
@@ -122,29 +138,37 @@
 </style>
 
 <script>
+import ContentModal from '../components/ContentModal.vue'
+
 export default {
   data () {
     return {
       typeNum: {},
+      tempType: {},
       cart: [],
       isLoading: false
     }
   },
+  components: { ContentModal },
   props: ['product', 'types'],
   watch: {
     types () {
       this.typeNum = this.types.reduce((acc, cur) => {
-        acc[cur.id] = 0
+        acc[cur.id] = ''
         return acc
       }, {})
     }
   },
   inject: ['emitter'],
   methods: {
-    stringToArray (str) {
-      return str.split('\n')
-    },
     addToCart (id) {
+      if (this.typeNum[id] === 0) {
+        this.emitter.emit('send-message', {
+          success: false,
+          content: '請填寫正確數量!'
+        })
+        return
+      }
       this.isLoading = true
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`
       const cart = {
@@ -155,7 +179,10 @@ export default {
         console.log(res)
         this.getCart()
         this.isLoading = false
-        this.emitter.emit('send-message', '成功加入購物車!')
+        this.emitter.emit('send-message', {
+          success: true,
+          content: '成功加入購物車!'
+        })
       })
     },
     getCart () {
@@ -167,6 +194,10 @@ export default {
     },
     sendCart () {
       this.emitter.emit('sendCart', this.cart)
+    },
+    openContentModal (type) {
+      this.tempType = type
+      this.$refs.contentModal.showModal()
     }
   },
   mounted () {

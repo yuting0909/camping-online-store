@@ -184,7 +184,6 @@ export default {
       }
     },
     addToFavorite (id) {
-      console.log(id)
       this.isFavorite = !this.isFavorite
       const list = JSON.parse(localStorage.getItem('favoriteProducts')) || []
       if (list.some(product => product.id === id)) {

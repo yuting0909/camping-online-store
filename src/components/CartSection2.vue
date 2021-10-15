@@ -263,7 +263,6 @@ export default {
       this.updateCarts(item)
     },
     updateCarts (item) {
-      console.log('update', item)
       this.isLoading = true
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
       const cart = {
@@ -271,20 +270,17 @@ export default {
         qty: item.qty
       }
       this.$http.put(url, { data: cart }).then(res => {
-        console.log(res)
         this.getCarts('update')
       })
     },
     removeCartItem (item) {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart/${item.id}`
       this.$http.delete(url).then(res => {
-        console.log(res)
         this.getCarts('delete')
       })
     },
     sendCart () {
       this.emitter.emit('sendCart', this.cart.carts)
-      console.log('sendCart')
     },
     addCouponCode () {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/coupon`
@@ -294,7 +290,6 @@ export default {
       this.isLoading = true
       this.$http.post(url, { data: coupon }).then(res => {
         this.getCarts('addCoupon')
-        console.log(res)
       })
     }
   },

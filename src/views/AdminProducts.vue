@@ -94,7 +94,6 @@ export default {
   components: { DeleteModal, Pagination },
   created () {
     this.getProducts()
-    console.log('這是首頁')
   },
   mixins: [promiseMixin],
   methods: {
@@ -139,12 +138,10 @@ export default {
       )
       this.deletePromise(this.temProduct)
         .then(res => {
-          console.log(res)
           this.pushMessageState(res, '營區刪除')
           return Promise.all(deleteTemTypesPromise)
         })
         .then(res => {
-          console.log(res)
           return this.getProducts()
         })
     }

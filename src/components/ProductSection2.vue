@@ -176,7 +176,6 @@ export default {
         qty: this.typeNum[id]
       }
       this.$http.post(url, { data: cart }).then(res => {
-        console.log(res)
         this.getCart()
         this.isLoading = false
         this.emitter.emit('send-message', {

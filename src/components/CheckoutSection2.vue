@@ -94,7 +94,6 @@ export default {
       this.$http.get(url).then(res => {
         if (res.data.success) {
           this.order = res.data.order
-          console.log(this.order)
           this.isLoading = false
         }
       })
@@ -102,7 +101,6 @@ export default {
     payOrder () {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/pay/${this.orderId}`
       this.$http.post(url).then(res => {
-        console.log(res)
         if (res.data.success) {
           this.getOrder()
         }

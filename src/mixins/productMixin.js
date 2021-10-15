@@ -64,12 +64,10 @@ export default {
     },
     uploadFile () {
       const file = this.$refs.fileInput.files[0]
-      console.log(file)
       const formData = new FormData()
       formData.append('file-to-upload', file)
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
       this.$http.post(api, formData).then(response => {
-        console.log(response.data)
         if (response.data.success) {
           this.temProduct.imageUrl = response.data.imageUrl
         }
@@ -77,12 +75,10 @@ export default {
     },
     uploadMoreFiles (key) {
       const file = this.itemRefs[key].files[0]
-      console.log(file)
       const formData = new FormData()
       formData.append('file-to-upload', file)
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/upload`
       this.$http.post(api, formData).then(response => {
-        console.log(response.data)
         if (response.data.success) {
           this.temProduct.images[key] = response.data.imageUrl
         }

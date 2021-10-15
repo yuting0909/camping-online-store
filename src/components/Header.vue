@@ -152,12 +152,6 @@ export default {
         this.cart = res.data.data.carts
       })
     }
-    // removeCarts () {
-    //   const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/carts`
-    //   this.$http.delete(url).then(res => {
-    //     console.log(res.data)
-    //   })
-    // }
   },
   created () {
     this.getCarts()

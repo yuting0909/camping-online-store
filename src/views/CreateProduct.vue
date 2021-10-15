@@ -349,12 +349,10 @@ export default {
       const temTypesPromise = this.temTypes.map(type => this.createPromise(type))
       this.createPromise(this.temProduct)
         .then(res => {
-          console.log(res)
           this.pushMessageState(res, '營區新增')
           return Promise.all(temTypesPromise)
         })
         .then(res => {
-          console.log(res)
           return this.$router.push('/admin/products')
         })
     }

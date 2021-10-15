@@ -401,16 +401,13 @@ export default {
       )
       this.updatePromise(this.temProduct)
         .then(res => {
-          console.log(res)
           this.pushMessageState(res, '營區更新')
           return Promise.all(deleteTypesPromise)
         })
         .then(res => {
-          console.log(res)
           return Promise.all(createTemTypesPromise)
         })
         .then(res => {
-          console.log(res)
           return this.$router.push('/admin/products')
         })
     }

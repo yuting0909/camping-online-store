@@ -190,7 +190,6 @@ export default {
       const order = this.form
       this.$http.post(url, { data: order }).then(res => {
         if (res.data.success) {
-          console.log(res)
           this.$router.push(`/checkout/${res.data.orderId}`)
         }
       })

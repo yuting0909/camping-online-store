@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/dist/',
+  publicPath: '/icamping/dist/',
   pwa: {
     iconPaths: {
       favicon32: 'favicon.ico',

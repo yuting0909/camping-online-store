@@ -1,8 +1,20 @@
 <template>
   <section class="about-section-2">
     <div class="container">
-      <div class="a-image a-image-1"></div>
-      <div class="a-image a-image-2"></div>
+      <div
+        class="a-image a-image-1"
+        :style="{
+          backgroundImage:
+            'url(' + publicPath + 'images/about/about-02.jpg' + ')'
+        }"
+      ></div>
+      <div
+        class="a-image a-image-2"
+        :style="{
+          backgroundImage:
+            'url(' + publicPath + 'images/about/about-03.jpg' + ')'
+        }"
+      ></div>
       <div class="a-content-1 d-flex content-1-slide-in">
         <div
           class="container-1 d-flex flex-column justify-content-center p-3 lh-lg"
@@ -70,7 +82,6 @@
     width: 500px;
     height: 585px;
     margin: 60px auto 0 0;
-    background-image: url('/images/about/about-02.jpg');
     background-position: center bottom;
     @include media-breakpoint-down(xl) {
       width: 400px;
@@ -95,7 +106,6 @@
     width: 650px;
     height: 405px;
     margin: -45px 207px 0 auto;
-    background-image: url('/images/about/about-03.jpg');
     @include media-breakpoint-down(xl) {
       width: 500px;
       height: 345px;
@@ -240,6 +250,7 @@
 export default {
   data () {
     return {
+      publicPath: process.env.BASE_URL,
       content_2: {
         active: false
       },

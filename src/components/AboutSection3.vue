@@ -1,5 +1,10 @@
 <template>
-  <section class="about-section-3 px-3 px-lg-5 py-5">
+  <section
+    class="about-section-3 px-3 px-lg-5 py-5"
+    :style="{
+      backgroundImage: 'url(' + publicPath + 'images/about/about-bg.jpeg' + ')'
+    }"
+  >
     <div
       class="a-3-container mx-auto pt-5 pb-3 px-3 px-lg-5 slide-in"
       :class="{ active: slide_in }"
@@ -21,7 +26,6 @@
 <style lang="scss">
 .about-section-3 {
   // height: 500px;
-  background-image: url('/images/about/about-bg.jpeg');
   object-fit: cover;
   background-size: cover;
   background-position: center 40%;
@@ -46,6 +50,7 @@
 export default {
   data () {
     return {
+      publicPath: process.env.BASE_URL,
       slide_in: false
     }
   },

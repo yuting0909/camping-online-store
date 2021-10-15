@@ -1,6 +1,6 @@
 <template>
   <section class="order-section-1">
-    <Banner :title="title" :imgUrl="imgUrl"></Banner>
+    <Banner :title="title" :imgUrl="publicPath + imgUrl"></Banner>
   </section>
 </template>
 
@@ -10,6 +10,7 @@ export default {
   components: { Banner },
   data () {
     return {
+      publicPath: process.env.BASE_URL,
       title: '訂購資訊',
       imgUrl: '/images/cart/cart-01.jpg'
     }

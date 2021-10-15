@@ -1,5 +1,5 @@
 <template>
-  <section class="category-group py-5">
+  <section class="category-group py-5" :style="{backgroundImage: 'url('+ publicPath + 'images/home/home-bg.jpeg'+ ')'}">
     <div class="themes pb-5">
       <div class="container mb-5">
         <h2
@@ -20,7 +20,7 @@
             >
               <img
                 class="position-relative"
-                :src="theme.imgUrl"
+                :src="publicPath + theme.imgUrl"
                 :alt="theme.title"
               />
               <figcaption class="position-absolute">
@@ -47,7 +47,7 @@
             >
               <img
                 class="position-relative"
-                :src="region.imgUrl"
+                :src="publicPath + region.imgUrl"
                 :alt="region.title"
               />
               <figcaption class="position-absolute">
@@ -64,7 +64,6 @@
 
 <style lang="scss">
 .category-group {
-  background-image: url('/images/home/home-bg.jpeg');
   background-position: bottom;
   background-repeat: no-repeat;
 }
@@ -186,19 +185,20 @@
 export default {
   data () {
     return {
+      publicPath: process.env.BASE_URL,
       themeList: [
-        { title: '森林系', imgUrl: '/images/home/home-theme-01.jpg', feature: '森林' },
-        { title: '觀夜景', imgUrl: '/images/home/home-theme-02.jpg', feature: '夜景' },
-        { title: '賞雲海', imgUrl: '/images/home/home-theme-03.jpg', feature: '雲海' },
-        { title: '親子遊樂', imgUrl: '/images/home/home-theme-04.jpg', feature: '遊樂設施' },
-        { title: '免裝備', imgUrl: '/images/home/home-theme-05.jpg', feature: '免裝備' },
-        { title: '新手露營', imgUrl: '/images/home/home-theme-06.jpg', feature: '裝備租借' }
+        { title: '森林系', imgUrl: 'images/home/home-theme-01.jpg', feature: '森林' },
+        { title: '觀夜景', imgUrl: 'images/home/home-theme-02.jpg', feature: '夜景' },
+        { title: '賞雲海', imgUrl: 'images/home/home-theme-03.jpg', feature: '雲海' },
+        { title: '親子遊樂', imgUrl: 'images/home/home-theme-04.jpg', feature: '遊樂設施' },
+        { title: '免裝備', imgUrl: 'images/home/home-theme-05.jpg', feature: '免裝備' },
+        { title: '新手露營', imgUrl: 'images/home/home-theme-06.jpg', feature: '裝備租借' }
       ],
       regions: [
-        { title: '北部', imgUrl: '/images/home/home-region-01.jpg', region: '北部' },
-        { title: '中部', imgUrl: '/images/home/home-region-02.jpg', region: '中部' },
-        { title: '南部', imgUrl: '/images/home/home-region-03.jpg', region: '南部' },
-        { title: '東部', imgUrl: '/images/home/home-region-04.jpg', region: '東部' }
+        { title: '北部', imgUrl: 'images/home/home-region-01.jpg', region: '北部' },
+        { title: '中部', imgUrl: 'images/home/home-region-02.jpg', region: '中部' },
+        { title: '南部', imgUrl: 'images/home/home-region-03.jpg', region: '南部' },
+        { title: '東部', imgUrl: 'images/home/home-region-04.jpg', region: '東部' }
       ]
     }
   }

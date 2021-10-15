@@ -1,5 +1,5 @@
 <template>
-  <section class="home-epaper">
+  <section class="home-epaper" :style="{backgroundImage: 'url('+ publicPath + 'images/home/home-epaper-bg.jpg' +')'}">
     <div class="container-fluid py-5 px-4 text-light">
       <h2>訂閱電子報</h2>
       <p>
@@ -34,7 +34,6 @@
 
 <style lang="scss">
 .home-epaper {
-  background-image: url('/images/home/home-epaper-bg.jpg');
   background-size: cover;
   background-position: bottom;
   background-attachment: fixed;
@@ -54,6 +53,11 @@
 
 <script>
 export default {
+  data () {
+    return {
+      publicPath: process.env.BASE_URL
+    }
+  },
   inject: ['emitter'],
   methods: {
     subscribe () {

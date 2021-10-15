@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/icamping/dist/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/icamping/' : '/',
   pwa: {
     iconPaths: {
       favicon32: 'favicon.ico',

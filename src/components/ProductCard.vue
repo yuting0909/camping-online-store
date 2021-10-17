@@ -2,7 +2,7 @@
   <div class="card border-0 text-decoration-none text-reset h-100 shadow">
     <button
       class="btn favorite-icon position-absolute px-2 py-1 mb-2"
-      @click="addToFavorite(product.id)"
+      @click="updateFavorite(product.id)"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@ export default {
   },
   props: ['product'],
   methods: {
-    addToFavorite (id) {
+    updateFavorite (id) {
       this.isFavorite = !this.isFavorite
       const list = JSON.parse(localStorage.getItem('favoriteProducts')) || []
       if (list.some(product => product.id === id)) {

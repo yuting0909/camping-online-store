@@ -12,7 +12,7 @@ export default {
     return {
       publicPath: process.env.BASE_URL,
       title: '遠離塵囂。享受生活',
-      imgUrl: '/images/about/about-01.jpg'
+      imgUrl: 'images/about/about-01.jpg'
     }
   }
 }

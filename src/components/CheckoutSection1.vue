@@ -12,7 +12,7 @@ export default {
     return {
       publicPath: process.env.BASE_URL,
       title: '訂單確認',
-      imgUrl: '/images/cart/cart-01.jpg'
+      imgUrl: 'images/cart/cart-01.jpg'
     }
   }
 }

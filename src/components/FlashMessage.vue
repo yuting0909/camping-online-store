@@ -1,15 +1,14 @@
 <template>
-  <div class="toast-container">
+  <div class="toast-container" id="flash-messages">
     <div
-      id="flash-message"
-      class="toast text-success bg-light border-0"
+      class="toast text-success bg-light border-0 rounded-4"
       role="alert"
       aria-live="assertive"
       aria-atomic="true"
-      ref="toast"
-      :class="{'text-warning': !message.success}"
+      ref="flashMessage"
+      :class="{ 'text-warning': !message.success }"
     >
-      <div class="toast-body">
+      <div class="toast-body" v-if="message.content">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="50"
@@ -46,12 +45,12 @@
 </template>
 
 <style lang="scss">
-#flash-message {
+#flash-messages {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 120;
+  z-index: 999;
 }
 </style>
 
@@ -68,10 +67,11 @@ export default {
   mounted () {
     this.emitter.on('send-message', msg => {
       this.message = msg
-      const toast = new Toast(this.$refs.toast, {
-        delay: 2000
+      const toast = new Toast(this.$refs.flashMessage, {
+        delay: 3000
       })
       toast.show()
+      console.log(msg)
     })
   }
 }

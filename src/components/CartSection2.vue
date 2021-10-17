@@ -64,9 +64,9 @@
               >
                 $ {{ $filters.currency(item.product.price) }}
               </td>
-              <td class="text-center align-middle px-3 border-light">
+              <td class="text-center align-middle border-light">
                 <div
-                  class="input-quantity d-flex justify-content-center border"
+                  class="input-quantity d-flex justify-content-center border m-0"
                 >
                   <button
                     class="btn btn-sm rounded-0"

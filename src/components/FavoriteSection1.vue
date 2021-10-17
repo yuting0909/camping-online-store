@@ -1,5 +1,5 @@
 <template>
-  <section class="order-section-1">
+  <section class="favorite-section-1">
     <Banner :title="title" :imgUrl="publicPath + imgUrl"></Banner>
   </section>
 </template>
@@ -11,8 +11,8 @@ export default {
   data () {
     return {
       publicPath: process.env.BASE_URL,
-      title: '訂購資訊',
-      imgUrl: 'images/cart/cart-01.jpg'
+      title: '收藏的營區',
+      imgUrl: 'images/products/products-01.jpg'
     }
   }
 }

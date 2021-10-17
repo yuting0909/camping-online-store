@@ -39,6 +39,13 @@ const routes = [
     }
   },
   {
+    path: '/favorite',
+    component: () => import('../views/Favorite.vue'),
+    meta: {
+      show: true
+    }
+  },
+  {
     path: '/order',
     component: () => import('../views/Order.vue'),
     meta: {

@@ -78,14 +78,14 @@
                   <button
                     v-if="!isFavorite"
                     class="btn btn-outline-warning btn-hover-white rounded-pill"
-                    @click="addToFavorite(id)"
+                    @click="updateFavorite(id)"
                   >
                     <span>收藏營地</span>
                   </button>
                   <button
                     v-else
                     class="btn btn-warning rounded-pill btn-hover-white text-white"
-                    @click="addToFavorite(id)"
+                    @click="updateFavorite(id)"
                   >
                     <span>取消收藏</span>
                   </button>
@@ -183,7 +183,7 @@ export default {
         this.isFavorite = list.some(product => product.id === this.product.id)
       }
     },
-    addToFavorite (id) {
+    updateFavorite (id) {
       this.isFavorite = !this.isFavorite
       const list = JSON.parse(localStorage.getItem('favoriteProducts')) || []
       if (list.some(product => product.id === id)) {

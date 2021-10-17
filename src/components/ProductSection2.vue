@@ -1,5 +1,5 @@
 <template>
-  <div class="product-section-2">
+  <section class="product-section-2">
     <Loading :active="isLoading">
       <div class="loadingio-spinner-spin-xmpavumjb">
         <div class="ldio-ylwm2fadiqf">
@@ -117,7 +117,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style lang="scss">
@@ -162,7 +162,7 @@ export default {
   inject: ['emitter'],
   methods: {
     addToCart (id) {
-      if (this.typeNum[id] === 0) {
+      if (!this.typeNum[id]) {
         this.emitter.emit('send-message', {
           success: false,
           content: '請填寫正確數量!'

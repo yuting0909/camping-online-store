@@ -1,6 +1,7 @@
 <template>
   <div class="card border-0 text-decoration-none text-reset h-100 shadow">
     <button
+      v-if="favoriteShow"
       class="btn favorite-icon position-absolute px-2 py-1 mb-2"
       @click="updateFavorite(product.id)"
     >
@@ -72,7 +73,13 @@ export default {
       isFavorite: false
     }
   },
-  props: ['product'],
+  props: {
+    product: Object,
+    favoriteShow: {
+      type: Boolean,
+      default: true
+    }
+  },
   methods: {
     updateFavorite (id) {
       this.isFavorite = !this.isFavorite

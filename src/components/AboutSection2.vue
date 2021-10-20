@@ -78,6 +78,7 @@
   height: 4px;
 }
 .about-section-2 {
+  overflow-x: hidden;
   .a-image-1 {
     width: 500px;
     height: 585px;

@@ -27,8 +27,10 @@
     background-color: rgba(41, 41, 41, 0.6);
     position: absolute;
     bottom: 10%;
-    left: 60%;
-    right: -5px;
+    right: 0;
+    @include media-breakpoint-up(sm) {
+      left: 60%;
+    }
   }
 }
 .s1-animate {

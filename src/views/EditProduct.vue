@@ -265,7 +265,7 @@
       <div class="col-12">
         <div class="mb-3">
           <div class="row row-cols-1 row-cols-lg-3 g-4">
-            <div class="col" v-for="type in temTypes" :key="type.title">
+            <div class="col" v-for="(type, i) in temTypes" :key="i">
               <div class="card bg-light h-100">
                 <img
                   v-if="type.images && type.images[0]"
@@ -297,7 +297,7 @@
                     <button
                       type="button"
                       class="btn btn-outline-success w-50 btn-left"
-                      @click="openModal(false, type)"
+                      @click="openModal(false, type, i)"
                     >
                       編輯
                     </button>
@@ -348,18 +348,6 @@ export default {
       temProduct: {},
       id: '',
       isLoading: false
-    }
-  },
-  watch: {
-    temProduct: {
-      handler () {
-        if (this.temTypes.length) {
-          this.temTypes.map(type => {
-            type.belong_to = this.temProduct.title
-          })
-        }
-      },
-      deep: true
     }
   },
   mixins: [productMixin, promiseMixin],

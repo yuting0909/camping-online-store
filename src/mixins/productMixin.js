@@ -26,6 +26,7 @@ export default {
         '雲海'
       ],
       temType: {},
+      temTypeIndex: 0,
       types: [],
       temTypes: [],
       isNew: false,
@@ -40,6 +41,16 @@ export default {
           this.temProduct.price = Math.min(...priceArr)
         } else {
           this.temProduct.price = 0
+        }
+      },
+      deep: true
+    },
+    temProduct: {
+      handler () {
+        if (this.temTypes.length) {
+          this.temTypes.map(type => {
+            type.belong_to = this.temProduct.title
+          })
         }
       },
       deep: true
@@ -84,11 +95,12 @@ export default {
         }
       })
     },
-    openModal (isNew, type) {
+    openModal (isNew, type, index) {
       if (isNew) {
         this.temType = {}
       } else {
         this.temType = { ...type }
+        this.temTypeIndex = index
       }
       this.isNew = isNew
       this.$refs.typeModal.showModal()
@@ -105,16 +117,13 @@ export default {
         }
       })
     },
-    updateTemType (item) {
-      item.belong_to = this.temProduct.title
-      item.category = '營地種類'
+    updateTemType ({ type, index }) {
+      type.belong_to = this.temProduct.title
+      type.category = '營地種類'
       if (this.isNew) {
-        this.temTypes.push({ ...item })
+        this.temTypes.push({ ...type })
       } else {
-        const i = this.temTypes.indexOf(
-          this.temTypes.find(type => type.id === item.id)
-        )
-        this.temTypes[i] = { ...item }
+        this.temTypes[index] = { ...type }
       }
       this.$refs.typeModal.hideModal()
     },

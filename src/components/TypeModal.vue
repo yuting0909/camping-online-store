@@ -191,7 +191,9 @@
           <button
             type="button"
             class="btn btn-primary"
-            @click="$emit('update-type', temType)"
+            @click="
+              $emit('update-type', { type: temType, index: index })
+            "
           >
             確認
           </button>
@@ -210,6 +212,9 @@ export default {
       default () {
         return {}
       }
+    },
+    index: {
+      type: Number
     }
   },
   watch: {

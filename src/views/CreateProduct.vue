@@ -251,7 +251,7 @@
       <div class="col-12">
         <div class="mb-3">
           <div class="row row-cols-1 row-cols-lg-3 g-4">
-            <div class="col" v-for="type in temTypes" :key="type.title">
+            <div class="col" v-for="(type, i) in temTypes" :key="i">
               <div class="card bg-light h-100">
                 <img
                   v-if="type.images && type.images[0]"
@@ -283,7 +283,7 @@
                     <button
                       type="button"
                       class="btn btn-outline-success w-50 btn-left"
-                      @click="openModal(false, type)"
+                      @click="openModal(false, type, i)"
                     >
                       編輯
                     </button>
@@ -321,7 +321,12 @@
       </div>
     </div>
   </div>
-  <type-modal ref="typeModal" :type="temType" @update-type="updateTemType" />
+  <type-modal
+    ref="typeModal"
+    :type="temType"
+    :index="temTypeIndex"
+    @update-type="updateTemType"
+  />
 </template>
 
 <script>
@@ -346,7 +351,9 @@ export default {
   mixins: [productMixin, promiseMixin],
   methods: {
     createProduct () {
-      const temTypesPromise = this.temTypes.map(type => this.createPromise(type))
+      const temTypesPromise = this.temTypes.map(type =>
+        this.createPromise(type)
+      )
       this.createPromise(this.temProduct)
         .then(res => {
           this.pushMessageState(res, '營區新增')

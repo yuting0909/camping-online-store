@@ -108,19 +108,22 @@ export default {
           this.types = Object.values(res.data.products).filter(
             product => product.category === '營地種類'
           )
+          this.createPagination(page)
+          this.isLoading = false
         }
-        this.pagination.current_page = page
-        this.pagination.page_start =
-          (this.pagination.current_page - 1) * this.pagination.offset
-        this.pagination.total_pages = Math.ceil(
-          this.products.length / this.pagination.offset
-        )
-        this.products = this.products.slice(
-          this.pagination.page_start,
-          this.pagination.page_start + this.pagination.offset
-        )
-        this.isLoading = false
       })
+    },
+    createPagination (currentPage) {
+      this.pagination.current_page = currentPage
+      this.pagination.page_start =
+        (this.pagination.current_page - 1) * this.pagination.offset
+      this.pagination.total_pages = Math.ceil(
+        this.products.length / this.pagination.offset
+      )
+      this.products = this.products.slice(
+        this.pagination.page_start,
+        this.pagination.page_start + this.pagination.offset
+      )
     },
     getProduct (id) {
       this.$router.push(`/admin/products/${id}`)

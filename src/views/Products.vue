@@ -147,7 +147,6 @@
               </div>
             </div>
             <div v-if="products.length" class="row mb-3">
-              <h3 class="fs-6 mb-3">搜尋結果：{{ productsLength }}個</h3>
               <div
                 class="col-sm-6 col-lg-6 col-xl-4 mb-3"
                 v-for="(item, i) in products"
@@ -170,22 +169,16 @@
         </div>
       </div>
     </section>
-    <!-- <products-section-1></products-section-1>
-    <products-section-2></products-section-2> -->
   </main>
 </template>
 
 <script>
-// import ProductsSection1 from '@/components/ProductsSection1.vue'
-// import ProductsSection2 from '@/components/ProductsSection2.vue'
 import Banner from '@/components/Banner.vue'
 import ProductCard from '@/components/ProductCard.vue'
 import Pagination from '@/components/Pagination.vue'
 
 export default {
   components: {
-    // ProductsSection1,
-    // ProductsSection2,
     Banner,
     ProductCard,
     Pagination
@@ -214,7 +207,6 @@ export default {
       filterRegions: [],
       filterFeatures: [],
       products: [],
-      productsLength: '',
       isLoading: false,
       pagination: {
         current_page: 1,
@@ -245,19 +237,21 @@ export default {
           product => product.category === '露營區'
         )
         this.filterProducts()
-        this.productsLength = this.products.length
-        this.pagination.current_page = page
-        this.pagination.page_start =
-          (this.pagination.current_page - 1) * this.pagination.offset
-        this.pagination.total_pages = Math.ceil(
-          this.products.length / this.pagination.offset
-        )
-        this.products = this.products.slice(
-          this.pagination.page_start,
-          this.pagination.page_start + this.pagination.offset
-        )
+        this.createPagination(page)
         this.isLoading = false
       })
+    },
+    createPagination (currentPage) {
+      this.pagination.current_page = currentPage
+      this.pagination.page_start =
+        (this.pagination.current_page - 1) * this.pagination.offset
+      this.pagination.total_pages = Math.ceil(
+        this.products.length / this.pagination.offset
+      )
+      this.products = this.products.slice(
+        this.pagination.page_start,
+        this.pagination.page_start + this.pagination.offset
+      )
     },
     filterProducts () {
       // filter products by regions

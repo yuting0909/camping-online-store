@@ -116,7 +116,12 @@
         </div>
       </nav>
     </div>
-    <router-link v-if="floatCart" to="/cart" id="float-cart" class="btn btn-primary px-3 py-2">
+    <router-link
+      v-if="floatCart"
+      to="/cart"
+      id="float-cart"
+      class="btn btn-primary d-flex align-items-center justify-content-center"
+    >
       <div class="fs-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -162,15 +167,17 @@ header,
   border-bottom: 0.25rem solid $secondary;
   color: $secondary;
 }
-.cart-badge {
+.badge.cart-badge {
   top: -2px;
   right: 2px;
+  padding: 0.35em 0.55em;
 }
 #float-cart {
+  width: 60px;
+  height: 60px;
   position: fixed;
   bottom: 20px;
   right: 20px;
-  // background-color: #F5FFFA;
   border-radius: 50%;
   text-decoration: none;
 }
@@ -218,6 +225,9 @@ export default {
   },
   beforeUpdate () {
     this.$refs.navOffcanvas.hideOffcanvas()
+  },
+  updated () {
+    this.getCarts()
   }
 }
 </script>

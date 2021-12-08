@@ -1,24 +1,22 @@
-# vue_icamping
+# icamping
+## 使用技術
+- 參加六角學院 Vue 3 實戰影音課程作品
+- 使用 Vue.js / Vue cli 架設，Vue-Router 管理路由
+- 引入 Bootstrap5，以 SCSS 客製樣式並製作 RWD 響應式網頁
+- 引入 VeeValidate 驗證使用者表單資料
+- 引入 Vue-Axios 發送 API 請求
+- 引入 Swiper 製作輪播效果
+- 使用 ESLint (Standard) 管控程式撰寫風格
+- 使用 ES6 Promise 語法，管理多個 API 請求的執行順序
+- 使用 localStorage 製作收藏商品的功能
 
-## Project setup
-```
-npm install
-```
+## 功能介紹 (user story)
+### 前台
+- 使用者可以瀏覽所有露營區及營區詳細資訊
+- 在瀏覽所有營區時，可以使用地區分類與主題分類篩選營區
+- 在瀏覽營區詳細資訊時，最下方會顯示相似分類的營區
+- 使用者可以收藏營區，並瀏覽所有的收藏清單
+- 使用者可以進行結帳流程(預定、套用優惠券、結帳)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 後台
+- 管理員可以在網站後台管理營區、訂單與優惠券(新增、編輯、刪除)

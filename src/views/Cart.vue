@@ -73,6 +73,7 @@
                     class="input-quantity d-flex justify-content-center border m-0"
                   >
                     <button
+                      type="button"
                       class="btn btn-sm rounded-0"
                       @click="decreaseQty(item)"
                     >
@@ -95,6 +96,7 @@
                       v-model="item.qty"
                     />
                     <button
+                      type="button"
                       class="btn btn-sm rounded-0"
                       @click="increaseQty(item)"
                     >
@@ -123,6 +125,7 @@
                 </td>
                 <td class="text-center align-middle border-light">
                   <button
+                    type="button"
                     class="btn btn-sm btn-outline-danger fs-5 btn-hover-white"
                     @click="removeCartItem(item)"
                   >
@@ -310,7 +313,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .cart-img {
   object-fit: cover;
   width: 100%;

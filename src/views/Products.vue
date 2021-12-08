@@ -308,13 +308,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '~bootstrap/scss/functions';
-@import '../style/custom/_variables';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~bootstrap/scss/utilities';
-
+<style lang="scss" scoped>
 .btn-check:checked + .btn-outline-secondary,
 .btn-check:active + .btn-outline-secondary,
 .btn-outline-secondary:active,

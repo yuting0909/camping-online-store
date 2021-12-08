@@ -163,6 +163,7 @@
         <div class="mb-3">
           <div class="mb-3">
             <button
+              type="button"
               class="btn btn-outline-primary btn-sm d-block"
               @click="temProduct.images.push('')"
             >

@@ -32,25 +32,6 @@
   </section>
 </template>
 
-<style lang="scss">
-.home-epaper {
-  background-size: cover;
-  background-position: bottom;
-  background-attachment: fixed;
-  height: 300px;
-  .contact-input {
-    background-color: transparent;
-    color: #fff;
-    &:focus {
-      background-color: transparent;
-    }
-    &::placeholder {
-      color: #fff;
-    }
-  }
-}
-</style>
-
 <script>
 export default {
   data () {
@@ -69,3 +50,22 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.home-epaper {
+  background-size: cover;
+  background-position: bottom;
+  background-attachment: fixed;
+  height: 300px;
+  .contact-input {
+    background-color: transparent;
+    color: #fff;
+    &:focus {
+      background-color: transparent;
+    }
+    &::placeholder {
+      color: #fff;
+    }
+  }
+}
+</style>

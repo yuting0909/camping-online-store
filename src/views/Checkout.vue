@@ -70,7 +70,7 @@
                   </tbody>
                 </table>
                 <div class="text-end" v-if="order.is_paid === false">
-                  <button class="btn btn-danger" @click="payOrder">
+                  <button type="button" class="btn btn-danger" @click="payOrder">
                     確認付款去
                   </button>
                 </div>

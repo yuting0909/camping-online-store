@@ -8,5 +8,18 @@ module.exports = {
       maskIcon: 'favicon.ico',
       msTileImage: 'favicon.ico'
     }
+  },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `
+          @import '~bootstrap/scss/functions';
+          @import '@/style/custom/_variables';
+          @import '~bootstrap/scss/variables';
+          @import '~bootstrap/scss/mixins';
+          @import '~bootstrap/scss/utilities';
+        `
+      }
+    }
   }
 }

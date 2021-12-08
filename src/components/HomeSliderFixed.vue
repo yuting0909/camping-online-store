@@ -25,6 +25,7 @@
       </transition-group>
       <div class="dots position-absolute">
         <button
+          type="button"
           v-for="(carousel, i) in carousels"
           :key="i"
           :class="{ active: index === i }"
@@ -35,7 +36,67 @@
   </section>
 </template>
 
-<style lang="scss">
+<script>
+export default {
+  data () {
+    return {
+      transitionName: 'left-in',
+      publicPath: process.env.BASE_URL,
+      carousels: [
+        {
+          title: '森呼吸',
+          text: '在森林浴中吸取樹木產生的芬多精，夜晚與杉木相伴共眠',
+          imgUrl: 'images/home/home-slider-01.jpg'
+        },
+        {
+          title: '團聚好時光',
+          text:
+            '假期就是要一家人團聚、或是找好朋友出遊，烤肉、聊天、小酌幾杯，享受悠閒的歡樂時光',
+          imgUrl: 'images/home/home-slider-02.jpg'
+        },
+        {
+          title: '懶人露營',
+          text:
+            '免裝備、免自備炊具，更不用自己親手搭帳，就能體驗野外生活的悠閒愜意',
+          imgUrl: 'images/home/home-slider-03.jpg'
+        }
+      ],
+      index: 0,
+      timer: null
+    }
+  },
+  watch: {
+    index (n, o) {
+      if (n > this.carousels.length - 1) {
+        this.index = 0
+      } else if (n < 0) {
+        this.index = this.carousels.length - 1
+      } else {
+        this.transitionName = n > o ? 'right-in' : 'left-in'
+      }
+    }
+  },
+  methods: {
+    setIndex (i) {
+      this.index = i
+    },
+    autoPlay () {
+      this.timer = setInterval(() => {
+        this.index++
+      }, 3000)
+    },
+    stopPlay () {
+      clearInterval(this.timer)
+      this.timer = null
+    }
+  },
+  mounted () {
+    this.autoPlay()
+  }
+}
+</script>
+
+<style lang="scss" scoped>
 .slider-container {
   height: 500px;
 }
@@ -110,63 +171,3 @@
   left: 100%;
 }
 </style>
-
-<script>
-export default {
-  data () {
-    return {
-      transitionName: 'left-in',
-      publicPath: process.env.BASE_URL,
-      carousels: [
-        {
-          title: '森呼吸',
-          text: '在森林浴中吸取樹木產生的芬多精，夜晚與杉木相伴共眠',
-          imgUrl: 'images/home/home-slider-01.jpg'
-        },
-        {
-          title: '團聚好時光',
-          text:
-            '假期就是要一家人團聚、或是找好朋友出遊，烤肉、聊天、小酌幾杯，享受悠閒的歡樂時光',
-          imgUrl: 'images/home/home-slider-02.jpg'
-        },
-        {
-          title: '懶人露營',
-          text:
-            '免裝備、免自備炊具，更不用自己親手搭帳，就能體驗野外生活的悠閒愜意',
-          imgUrl: 'images/home/home-slider-03.jpg'
-        }
-      ],
-      index: 0,
-      timer: null
-    }
-  },
-  watch: {
-    index (n, o) {
-      if (n > this.carousels.length - 1) {
-        this.index = 0
-      } else if (n < 0) {
-        this.index = this.carousels.length - 1
-      } else {
-        this.transitionName = n > o ? 'right-in' : 'left-in'
-      }
-    }
-  },
-  methods: {
-    setIndex (i) {
-      this.index = i
-    },
-    autoPlay () {
-      this.timer = setInterval(() => {
-        this.index++
-      }, 3000)
-    },
-    stopPlay () {
-      clearInterval(this.timer)
-      this.timer = null
-    }
-  },
-  mounted () {
-    this.autoPlay()
-  }
-}
-</script>

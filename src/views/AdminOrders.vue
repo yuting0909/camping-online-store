@@ -56,12 +56,14 @@
           <td>
             <div class="btn-group">
               <button
+                type="button"
                 class="btn btn-outline-primary btn-sm"
                 @click="openModal(order)"
               >
                 檢視
               </button>
               <button
+              type="button"
                 class="btn btn-outline-danger btn-sm"
                 @click="openDelModal(order)"
               >

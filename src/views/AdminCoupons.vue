@@ -14,7 +14,7 @@
     </div>
   </Loading>
   <div class="text-end mt-4">
-    <button class="btn btn-primary" @click="openModal(true)">
+    <button type="button" class="btn btn-primary" @click="openModal(true)">
       建立優惠券
     </button>
   </div>
@@ -43,12 +43,14 @@
           <td>
             <div class="btn-group">
               <button
+              type="button"
                 class="btn btn-outline-primary btn-sm"
                 @click="openModal(false, item)"
               >
                 編輯
               </button>
               <button
+                type="button"
                 class="btn btn-outline-danger btn-sm"
                 @click="openDelModal(item)"
               >

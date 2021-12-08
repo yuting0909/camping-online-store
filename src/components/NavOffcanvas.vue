@@ -98,22 +98,6 @@
   </div>
 </template>
 
-<style lang="scss">
-@import '~bootstrap/scss/functions';
-@import '../style/custom/_variables';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~bootstrap/scss/utilities';
-
-#navOffcanvas {
-  width: 256px;
-}
-.nav-item .active-offcanvas {
-  color: $light;
-  background-color: $secondary;
-}
-</style>
-
 <script>
 import Offcanvas from 'bootstrap/js/dist/offcanvas'
 
@@ -137,3 +121,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+#navOffcanvas {
+  width: 256px;
+}
+.nav-item .active-offcanvas {
+  color: $light;
+  background-color: $secondary;
+}
+</style>

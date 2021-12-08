@@ -41,12 +41,14 @@
                 class="position-absolute w-100 top-50 start-50 translate-middle"
               >
                 <button
+                  type="button"
                   class="btn btn-sm btn-pre fs-3"
                   @click="setIndex(index - 1)"
                 >
                   <i class="bi bi-chevron-left"></i>
                 </button>
                 <button
+                  type="button"
                   class="btn btn-sm btn-next fs-3 float-end"
                   @click="setIndex(index + 1)"
                 >
@@ -93,6 +95,7 @@
                 <div class="row g-2 mt-auto mb-3">
                   <div class="col-sm-6 d-grid">
                     <button
+                      type="button"
                       v-if="!isFavorite"
                       class="btn btn-outline-warning btn-hover-white rounded-pill"
                       @click="updateFavorite(id)"
@@ -100,6 +103,7 @@
                       <span>收藏營地</span>
                     </button>
                     <button
+                      type="button"
                       v-else
                       class="btn btn-warning rounded-pill btn-hover-white text-white"
                       @click="updateFavorite(id)"
@@ -109,6 +113,7 @@
                   </div>
                   <div class="col-sm-6 d-grid">
                     <button
+                      type="button"
                       class="btn btn-outline-secondary btn-hover-white rounded-pill"
                       @click="scrollToChooseType"
                     >
@@ -203,6 +208,7 @@
                         </div>
                         <div class="col-6">
                           <button
+                            type="button"
                             class="btn btn-primary w-100"
                             @click="addToCart(type.id)"
                           >
@@ -395,14 +401,7 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-@import '~bootstrap/scss/functions';
-@import '../style/custom/_variables';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~bootstrap/scss/utilities';
-
+<style lang="scss" scoped>
 .product-intro {
   .container {
     @include media-breakpoint-up(xxl) {

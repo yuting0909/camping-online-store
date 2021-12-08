@@ -4,7 +4,7 @@
   >
     <div class="row px-3 border-bottom shadow-sm">
       <div class="col my-auto">
-        <a class="fs-4 d-md-none" @click.prevent="openOffcanvas">
+        <a class="fs-4 d-md-none" href="#" @click.prevent="openOffcanvas">
           <i class="bi bi-list"></i>
         </a>
       </div>
@@ -145,44 +145,6 @@
   </header>
 </template>
 
-<style lang="scss">
-@import '~bootstrap/scss/functions';
-@import '../style/custom/_variables';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~bootstrap/scss/utilities';
-
-#logo {
-  max-height: 100px;
-}
-#logo-text {
-  max-height: 60px;
-  min-width: 120px;
-}
-header,
-#headerNavbar {
-  z-index: 100;
-}
-.nav-item .active-link {
-  border-bottom: 0.25rem solid $secondary;
-  color: $secondary;
-}
-.badge.cart-badge {
-  top: -2px;
-  right: 2px;
-  padding: 0.35em 0.55em;
-}
-#float-cart {
-  width: 60px;
-  height: 60px;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  border-radius: 50%;
-  text-decoration: none;
-}
-</style>
-
 <script>
 import emitter from '../methods/emitter'
 import NavOffcanvas from '../components/NavOffcanvas.vue'
@@ -223,11 +185,40 @@ export default {
   unmounted () {
     window.removeEventListener('scroll', this.scrollHandler)
   },
-  beforeUpdate () {
-    this.$refs.navOffcanvas.hideOffcanvas()
-  },
   updated () {
     this.getCarts()
   }
 }
 </script>
+
+<style lang="scss" scoped>
+#logo {
+  max-height: 100px;
+}
+#logo-text {
+  max-height: 60px;
+  min-width: 120px;
+}
+header,
+#headerNavbar {
+  z-index: 100;
+}
+.nav-item .active-link {
+  border-bottom: 0.25rem solid $secondary;
+  color: $secondary;
+}
+.badge.cart-badge {
+  top: -2px;
+  right: 2px;
+  padding: 0.35em 0.55em;
+}
+#float-cart {
+  width: 60px;
+  height: 60px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  text-decoration: none;
+}
+</style>

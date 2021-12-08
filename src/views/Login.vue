@@ -72,14 +72,6 @@
   </section>
 </template>
 
-<style lang="scss">
-.login {
-  object-fit: cover;
-  background-size: cover;
-  background-position: center 40%;
-}
-</style>
-
 <script>
 import pushMessageState from '../methods/pushMessageState'
 import ToastMessages from '../components/ToastMessages.vue'
@@ -115,3 +107,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.login {
+  object-fit: cover;
+  background-size: cover;
+  background-position: center 40%;
+}
+</style>

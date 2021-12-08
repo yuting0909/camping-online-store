@@ -6,13 +6,13 @@
   </div>
 </template>
 
-<style lang="scss">
-@import '~bootstrap/scss/functions';
-@import '../style/custom/_variables';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~bootstrap/scss/utilities';
+<script>
+export default {
+  props: ['title', 'imgUrl']
+}
+</script>
 
+<style lang="scss" scoped>
 .banner {
   height: 200px;
   object-fit: cover;
@@ -49,9 +49,3 @@
   }
 }
 </style>
-
-<script>
-export default {
-  props: ['title', 'imgUrl']
-}
-</script>

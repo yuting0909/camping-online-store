@@ -1,6 +1,7 @@
 <template>
   <div class="card border-0 text-decoration-none text-reset h-100 shadow">
     <button
+      type="button"
       v-if="favoriteShow"
       class="btn favorite-icon position-absolute px-2 py-1 mb-2"
       @click="updateFavorite(product.id)"
@@ -37,34 +38,6 @@
     </div>
   </div>
 </template>
-
-<style lang="scss">
-.product-img {
-  height: 180px;
-  object-fit: cover;
-}
-.favorite-icon {
-  top: 8px;
-  right: 8px;
-  border-radius: 50%;
-  background-color: rgba(194, 194, 194, 0.5);
-  z-index: 10;
-  &:focus {
-    box-shadow: none;
-  }
-  svg {
-    fill: #fff;
-    &.active {
-      fill: #dc5a4a;
-    }
-  }
-}
-.text-hidden {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-</style>
 
 <script>
 export default {
@@ -108,3 +81,31 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.product-img {
+  height: 180px;
+  object-fit: cover;
+}
+.favorite-icon {
+  top: 8px;
+  right: 8px;
+  border-radius: 50%;
+  background-color: rgba(194, 194, 194, 0.5);
+  z-index: 10;
+  &:focus {
+    box-shadow: none;
+  }
+  svg {
+    fill: #fff;
+    &.active {
+      fill: #dc5a4a;
+    }
+  }
+}
+.text-hidden {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>

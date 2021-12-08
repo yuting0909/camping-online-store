@@ -145,13 +145,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '~bootstrap/scss/functions';
-@import '../style/custom/_variables';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~bootstrap/scss/utilities';
-
+<style lang="scss" scoped>
 .about-section-2 .container {
   @include media-breakpoint-up(xxl) {
     max-width: 1200px;
